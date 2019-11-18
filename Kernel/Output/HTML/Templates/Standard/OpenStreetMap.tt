@@ -7,12 +7,6 @@
 # did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 <div class="OpenStreetMapWindow" id="OSM"> 
-<!--    <div class="Header">
-        <div class="ActionMenu">
-            <div class="WidgetAcion Close"></div>
-            <div class "Clear"></div>
-        </div>
-    </div> -->
     <div class="Content">
         <figure id="openstreetmap-canvas" style='height:75vh;margin:0px;'>
         </figure>

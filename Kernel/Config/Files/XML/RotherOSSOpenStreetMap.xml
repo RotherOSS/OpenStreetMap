@@ -117,7 +117,7 @@
             <Hash> 
                 <Item Key="Class">Location</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Location</Item>
-                <Item Key="IconPath"></Item>
+                <Item Key="IconPath">/otrs-web/skins/Agent/default/img/Location.png</Item>
                 <Item Key="LocationInfo">
                     <Hash>
                         <Item Key="SourceKeys">
@@ -164,35 +164,6 @@
                 <Item Key="LineWidth">4</Item>
                 <Item Key="LineColor">#ff0000</Item>
                 <Item Key="LinkSelf">1</Item>
-            </Hash>
-        </Value>
-    </Setting>
-    <Setting Name="RotherOSSOpenStreetMap::ClassConfig###003" Required="0" Valid="1">
-        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
-        <Value>
-            <Hash> 
-                <Item Key="Class">Server</Item>
-                <Item Key="Backend">Kernel::System::OpenStreetMap::LocalObject</Item>
-                <Item Key="IconPath"></Item>
-                <Item Key="LocationInfo">
-                    <Hash>
-                        <Item Key="SourceKeys">
-                            <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
-                            </Hash>
-                        </Item>
-                        <Item Key="LinkedClasses">
-                            <Array>
-                                <Item>Location</Item>
-                            </Array>
-                        </Item>
-                    </Hash>
-                </Item>
-                <Item Key="LineWidth"></Item>
-                <Item Key="LineColor"></Item>
-                <Item Key="LinkSelf"></Item>
             </Hash>
         </Value>
     </Setting>
