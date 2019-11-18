@@ -23,10 +23,10 @@ Core.OpenStreetMap = (function (TargetNS) {
 
     TargetNS.CreateMap = function () {
 	    // CSS laden
-	    TargetNS.LoadCSS("https://unpkg.com/leaflet@1.4.0/dist/leaflet.css");
+        TargetNS.LoadCSS("/otrs-web/skins/Agent/default/css/thirdparty/leaflet-1.4.0/leaflet.css");
 	
 	    // Leafletscript laden
-	    TargetNS.LoadScript("https://unpkg.com/leaflet@1.4.0/dist/leaflet.js", TargetNS.MapScript);
+        TargetNS.LoadScript("/otrs-web/js/thirdparty/leaflet-1.4.0/leaflet.js", TargetNS.MapScript);
     };
 
     TargetNS.MapScript = function () {
