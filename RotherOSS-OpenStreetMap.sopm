@@ -4,7 +4,7 @@
     <Version>0.0.0</Version>
     <Framework>6.0.x</Framework>
     <Vendor>Rother OSS GmbH</Vendor>
-    <URL>https://otrs.com/</URL>
+    <URL>https://rother-oss.com/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Adds an interface to OpenStreetMap.</Description>
     <Filelist>
