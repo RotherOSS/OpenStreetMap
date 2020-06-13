@@ -14,11 +14,15 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::Config',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::ITSMConfigItem',
+    'Kernel::System::LinkObject',
 );
 
 =head1 NAME
 
-Kernel::System::OpenStreetMap::Line - Backend for ITSMConfigItem classes linked to two locations
+Kernel::System::OpenStreetMap::Section - Backend for ITSMConfigItem classes linked to two locations
 
 =head1 DESCRIPTION
 
@@ -59,9 +63,9 @@ Gathers location and icon info.
 
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
-    
+
     # check for needed data
-    for my $Needed ( qw/BackendDef Class/ ) {
+    for my $Needed (qw/BackendDef Class/) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -72,108 +76,114 @@ sub GatherInfo {
     }
 
     my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
-    my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
-    my $ParentClass = $Param{BackendDef}{LocationInfo}{LinkedClasses}[0];
+    my $LinkObject       = $Kernel::OM->Get('Kernel::System::LinkObject');
+    my $ParentClass      = $Param{BackendDef}{LocationInfo}{LinkedClasses}[0];
 
     # sections are drawn as parts of the linked class, they need to be gathered first
     my @CIs;
     if ( $Param{ConfigItemID} ) {
         my $LinkList = $LinkObject->LinkListWithData(
-            Object                          => 'ITSMConfigItem',
-            Key                             => $Param{ConfigItemID},
-            State                           => 'Valid',
-            UserID                          => 1,
+            Object => 'ITSMConfigItem',
+            Key    => $Param{ConfigItemID},
+            State  => 'Valid',
+            UserID => 1,
         );
-        
+
         LINKS:
-        for my $LTypes ( values %{ $LinkList } ) {
-          for my $LDirs ( values %{ $LTypes } ) {
-            for my $CINums ( values %{ $LDirs } ) {
-              for my $LinkedItem ( values %{ $CINums } ) {
+        for my $LTypes ( values %{$LinkList} ) {
+            for my $LDirs ( values %{$LTypes} ) {
+                for my $CINums ( values %{$LDirs} ) {
+                    for my $LinkedItem ( values %{$CINums} ) {
 
-                if ( $LinkedItem->{Class} eq $ParentClass ) {
-                    @CIs = (
-                        $ConfigItemObject->ConfigItemGet( ConfigItemID => $LinkedItem->{ConfigItemID} ),
-                    );
-                    last LINKS;
+                        if ( $LinkedItem->{Class} eq $ParentClass ) {
+                            @CIs = (
+                                $ConfigItemObject->ConfigItemGet( ConfigItemID => $LinkedItem->{ConfigItemID} ),
+                            );
+                            last LINKS;
+                        }
+
+                    }
                 }
-
-              }
             }
-          }
         }
 
         if ( !@CIs ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'notice',
-                Message  => "No link of class $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] found for ConfigItemID $Param{ConfigItemID}!",
+                Message =>
+                    "No link of class $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] found for ConfigItemID $Param{ConfigItemID}!",
             );
             return;
         }
     }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-        my %ClassToID = reverse %{ $GeneralCatalogObject->ItemList(Class => 'ITSM::ConfigItem::Class') };
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
 
-        push @CIs, @{ $ConfigItemObject->ConfigItemResultList(
-            ClassID => $ClassToID{ $ParentClass },
-        ) };
+        push @CIs, @{
+            $ConfigItemObject->ConfigItemResultList(
+                ClassID => $ClassToID{$ParentClass},
+            )
+        };
     }
 
     # get the configurations for the class backends
-    my $ConfigObject   = $Kernel::OM->Get('Kernel::Config');
-    my %LinkBackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
-    my $ParentObject   = $Kernel::OM->Get( $LinkBackendDef{ $ParentClass }{Backend} );
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my %LinkBackendDef
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+    my $ParentObject = $Kernel::OM->Get( $LinkBackendDef{$ParentClass}{Backend} );
 
     my ( $From, $To, %Icons, %Lines );
+
     # cycle through the parent CIs
     CI:
-    for my $ConfigItem ( @CIs ) {
+    for my $ConfigItem (@CIs) {
 
         my %ParentInfo = $ParentObject->GatherInfo(
             Class        => $ParentClass,
-            BackendDef   => $LinkBackendDef{ $ParentClass },
+            BackendDef   => $LinkBackendDef{$ParentClass},
             ConfigItemID => $ConfigItem->{ConfigItemID},
         );
 
         my $LinkList = $LinkObject->LinkListWithData(
-            Object                          => 'ITSMConfigItem',
-            Key                             => $ConfigItem->{ConfigItemID},
-            State                           => 'Valid',
-            UserID                          => 1,
+            Object => 'ITSMConfigItem',
+            Key    => $ConfigItem->{ConfigItemID},
+            State  => 'Valid',
+            UserID => 1,
         );
 
         my @Sections;
-# hier weiter...
-        LINKS:
-        for my $LTypes ( values %{ $LinkList } ) {
-          for my $LDirs ( values %{ $LTypes } ) {
-            for my $CINums ( values %{ $LDirs } ) {
-              for my $LinkedItem ( values %{ $CINums } ) {
 
-                if ( !$Ends[0] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses} ) {
-                    $Ends[0] = $LinkedItem->{ConfigItemID};
-                    if ( $Ends[1] ) {
-                        last LINKS;
-                    }
-                }
-                elsif ( !$Ends[1] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[1] ) {
-                    $Ends[1] = $LinkedItem->{ConfigItemID};
-                    if ( $Ends[0] ) {
-                        last LINKS;
-                    }
-                }
-
-              }
-            }
-          }
-        }
-
+    # hier weiter...
+    #        LINKS:
+    #        for my $LTypes ( values %{ $LinkList } ) {
+    #          for my $LDirs ( values %{ $LTypes } ) {
+    #            for my $CINums ( values %{ $LDirs } ) {
+    #              for my $LinkedItem ( values %{ $CINums } ) {
+    #
+    #                if ( !$Ends[0] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses} ) {
+    #                    $Ends[0] = $LinkedItem->{ConfigItemID};
+    #                    if ( $Ends[1] ) {
+    #                        last LINKS;
+    #                    }
+    #                }
+    #                elsif ( !$Ends[1] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[1] ) {
+    #                    $Ends[1] = $LinkedItem->{ConfigItemID};
+    #                    if ( $Ends[0] ) {
+    #                        last LINKS;
+    #                    }
+    #                }
+    #
+    #              }
+    #            }
+    #          }
+    #        }
+    #
     }
-#use Data::Dumper;
-#print STDERR "vo60 - Icons: ".Dumper(\%Icons);
-#print STDERR "vo60 - Lines: ".Dumper(\%Lines);
-
+##use Data::Dumper;
+##print STDERR "vo60 - Icons: ".Dumper(\%Icons);
+##print STDERR "vo60 - Lines: ".Dumper(\%Lines);
+    #
     return (
         From  => $From,
         To    => $To,
@@ -182,7 +192,6 @@ sub GatherInfo {
     );
 
 }
-
 
 1;
 

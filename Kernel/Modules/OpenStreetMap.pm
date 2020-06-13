@@ -3,8 +3,8 @@
 # Copyright (C) 2019 Rother OSS GmbH, http://otrs.ch/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::Modules::OpenStreetMap;
@@ -30,27 +30,27 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get objects
-    my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
     # get params
     my %GetParam;
-   
+
     for my $Attribute ( $ParamObject->GetParamNames() ) {
-        $GetParam{ $Attribute } = $ParamObject->GetParam( Param => $Attribute );
+        $GetParam{$Attribute} = $ParamObject->GetParam( Param => $Attribute );
     }
 
-#use Data::Dumper;
-#print STDERR "vo60 - GP: ".Dumper(\%GetParam);
+    #use Data::Dumper;
+    #print STDERR "vo60 - GP: ".Dumper(\%GetParam);
 
     # AJAX function call
     if ( $GetParam{OriginalAction} ) {
-    
+
         # get icon and location info
         my $OSMObject = $Kernel::OM->Get('Kernel::System::OpenStreetMap');
 
         my $JSON = $LayoutObject->BuildSelectionJSON(
-            $OSMObject->GenerateResponse( %GetParam ),
+            $OSMObject->GenerateResponse(%GetParam),
         );
 
         return $LayoutObject->Attachment(
@@ -76,13 +76,14 @@ sub Run {
         # get layout object
         my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
 
-#        # investigate refresh
-#        my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
+        #        # investigate refresh
+        #        my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
 
         # output header
         my $Output = $LayoutObject->Header(
-            Title   => Translatable('OpenStreetMap'),
-#            Refresh => $Refresh,
+            Title => Translatable('OpenStreetMap'),
+
+            #            Refresh => $Refresh,
         );
         $Output .= $LayoutObject->NavigationBar();
 

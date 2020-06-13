@@ -2,9 +2,9 @@
 <otrs_config version="2.0" init="Application">
     <Setting Name="RotherOSSOpenStreetMap::ShowForClasses" Required="0" Valid="1">
         <Description Translatable="1">For which classes the map is displayed.</Description>
-        <Navigation>RotherOSSOpenStreetMap</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="ITSMConfigItem::Line">1</Item>
                 <Item Key="ITSMConfigItem::Location">1</Item>
             </Hash>
@@ -12,9 +12,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::IncidentStateColors" Required="0" Valid="1">
         <Description Translatable="1">Color representation of incident states on the map.</Description>
-        <Navigation>RotherOSSOpenStreetMap</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Operational">#22e5a0</Item>
                 <Item Key="Warning">#e0d040</Item>
                 <Item Key="Incident">#ff3000</Item>
@@ -40,6 +40,7 @@
         </Value>
     </Setting>
     <Setting Name="Loader::Module::AgentDashboard###437-OSM" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
         <Value>
             <Hash>
@@ -57,6 +58,7 @@
         </Value>
     </Setting>
     <Setting Name="Loader::Module::AgentITSMConfigItemZoom###437-OSM" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
         <Value>
             <Hash>
@@ -160,9 +162,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###001" Required="0" Valid="1">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class">Location</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Location</Item>
                 <Item Key="IconPath">/otrs-web/skins/Agent/default/img/Location.png</Item>
@@ -187,9 +189,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###002" Required="0" Valid="1">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class">Line</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Line</Item>
                 <Item Key="IconPath"></Item>
@@ -217,9 +219,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###004" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -244,9 +246,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###005" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -271,9 +273,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###006" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -298,9 +300,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###007" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -325,9 +327,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###008" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -352,9 +354,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###009" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -379,9 +381,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ClassConfig###010" Required="0" Valid="0">
         <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Class"></Item>
                 <Item Key="Backend"></Item>
                 <Item Key="IconPath"></Item>
@@ -406,9 +408,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ActionConfig###001" Required="0" Valid="1">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ActionConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Action">AgentITSMConfigItemZoom</Item>
                 <Item Key="Show">
                     <Array>
@@ -421,9 +423,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ActionConfig###002" Required="0" Valid="0">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ActionConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Action">AgentDashboard</Item>
                 <Item Key="Show">
                     <Array>
@@ -437,9 +439,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ActionConfig###003" Required="0" Valid="0">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ActionConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Action">OpenStreetMap</Item>
                 <Item Key="Show">
                     <Array>
@@ -453,9 +455,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ActionConfig###004" Required="0" Valid="0">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ActionConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Action"></Item>
                 <Item Key="Show"><Array></Array></Item>
                 <Item Key="Margin"></Item>
@@ -464,9 +466,9 @@
     </Setting>
     <Setting Name="RotherOSSOpenStreetMap::ActionConfig###005" Required="0" Valid="0">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
-        <Navigation>RotherOSSOpenStreetMap::ActionConfig</Navigation>
+        <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
-            <Hash> 
+            <Hash>
                 <Item Key="Action"></Item>
                 <Item Key="Show"><Array></Array></Item>
                 <Item Key="Margin"></Item>

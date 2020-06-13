@@ -2,8 +2,8 @@
 # Copyright (C) 2020 Rother OSS GmbH, http://rother-oss.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# the enclosed file COPYING for license information (GPL). If you
+# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
 # --
 
 package Kernel::Output::HTML::FilterElementPost::OpenStreetMapCIWidget;
@@ -14,6 +14,7 @@ use warnings;
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::Output::HTML::Layout',
+    'Kernel::System::ITSMConfigItem',
 );
 
 sub new {
@@ -46,7 +47,7 @@ sub Run {
     );
 
     # insert map if CI belongs to active class
-    if ( $ShowMapClasses->{ 'ITSMConfigItem::'.$Version->{Class} } ) {
+    if ( $ShowMapClasses->{ 'ITSMConfigItem::' . $Version->{Class} } ) {
         my $OSMCanvas = $Self->{LayoutObject}->Output(
             TemplateFile => 'OpenStreetMapWidget',
             Data         => {},

@@ -14,11 +14,15 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::Config',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::ITSMConfigItem',
+    'Kernel::System::LinkObject',
 );
 
 =head1 NAME
 
-Kernel::System::OpenStreetMap::Line - Backend for ITSMConfigItem classes linked to one location
+Kernel::System::OpenStreetMap::LocalObject - Backend for ITSMConfigItem classes linked to one location
 
 =head1 DESCRIPTION
 
@@ -59,9 +63,9 @@ Gathers location and icon info.
 
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
-    
+
     # check for needed data
-    for my $Needed ( qw/BackendDef Class/ ) {
+    for my $Needed (qw/BackendDef Class/) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -81,49 +85,53 @@ sub GatherInfo {
     }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-        my %ClassToID = reverse %{ $GeneralCatalogObject->ItemList(Class => 'ITSM::ConfigItem::Class') };
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
 
-        push @CIs, @{ $ConfigItemObject->ConfigItemResultList(
-            ClassID => $ClassToID{ $Param{Class} },
-        ) };
+        push @CIs, @{
+            $ConfigItemObject->ConfigItemResultList(
+                ClassID => $ClassToID{ $Param{Class} },
+            )
+        };
     }
 
     my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
 
     # get the configurations for the class backends
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my %LinkBackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+    my %LinkBackendDef
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
 
     my ( $From, $To, %Icons );
     CI:
-    for my $ConfigItem ( @CIs ) {
+    for my $ConfigItem (@CIs) {
 
         my $LinkList = $LinkObject->LinkListWithData(
-            Object                          => 'ITSMConfigItem',
-            Key                             => $ConfigItem->{ConfigItemID},
-            State                           => 'Valid',
-            UserID                          => 1,
+            Object => 'ITSMConfigItem',
+            Key    => $ConfigItem->{ConfigItemID},
+            State  => 'Valid',
+            UserID => 1,
         );
 
         my $LocationID;
 
         LINKS:
-        for my $LTypes ( values %{ $LinkList } ) {
-          for my $LDirs ( values %{ $LTypes } ) {
-            for my $CINums ( values %{ $LDirs } ) {
-              for my $LinkedItem ( values %{ $CINums } ) {
+        for my $LTypes ( values %{$LinkList} ) {
+            for my $LDirs ( values %{$LTypes} ) {
+                for my $CINums ( values %{$LDirs} ) {
+                    for my $LinkedItem ( values %{$CINums} ) {
 
-                if ( $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] ) {
-                    $LocationID = $LinkedItem->{ConfigItemID};
-                    last LINKS;
+                        if ( $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] ) {
+                            $LocationID = $LinkedItem->{ConfigItemID};
+                            last LINKS;
+                        }
+
+                    }
                 }
-
-              }
             }
-          }
         }
 
-        my $BackendObject = $Kernel::OM->Get( $LinkBackendDef{ $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] }{Backend} );
+        my $BackendObject
+            = $Kernel::OM->Get( $LinkBackendDef{ $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] }{Backend} );
 
         my %Info = $BackendObject->GatherInfo(
             ConfigItemID => $LocationID,
@@ -147,16 +155,17 @@ sub GatherInfo {
         else {
             if ( $From->[0] > $Info{From}[0] ) { $From->[0] = $Info{From}[0] }
             if ( $From->[1] > $Info{From}[1] ) { $From->[1] = $Info{From}[1] }
-            if ( $To->[0]   < $Info{To}[0] )   { $To->[0]   = $Info{To}[0] }
-            if ( $To->[1]   < $Info{To}[1] )   { $To->[1]   = $Info{To}[1] }
+            if ( $To->[0] < $Info{To}[0] )     { $To->[0]   = $Info{To}[0] }
+            if ( $To->[1] < $Info{To}[1] )     { $To->[1]   = $Info{To}[1] }
         }
-        
+
         # add icon
-#        push @{ $Icons{Path} },      $Param{BackendDef}{IconPath};
+        #        push @{ $Icons{Path} },      $Param{BackendDef}{IconPath};
         push @{ $Icons{Path} },      $Info{Icons}{Path}[0];
         push @{ $Icons{Latitude} },  $Info{Icons}{Latitude}[0];
         push @{ $Icons{Longitude} }, $Info{Icons}{Longitude}[0];
         push @{ $Icons{Link} },      $Info{Icons}{Link}[0];
+
 #        push @{ $Icons{Link} },      ( $Param{BackendDef}{LinkSelf} ) ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}" : '';
 
     }
@@ -168,7 +177,6 @@ sub GatherInfo {
     );
 
 }
-
 
 1;
 

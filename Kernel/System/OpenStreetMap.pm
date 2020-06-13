@@ -14,6 +14,8 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::Config',
+    'Kernel::System::ITSMConfigItem',
 );
 
 =head1 NAME
@@ -56,15 +58,15 @@ Generates the Response containing all the info.
 
 sub GenerateResponse {
     my ( $Self, %Param ) = @_;
-    
+
     my $ReturnErr = [
         {
-            Name         => 'From',
-            Data         => [-10, -10],
+            Name => 'From',
+            Data => [ -10, -10 ],
         },
         {
-            Name         => 'To',
-            Data         => [10, 10],
+            Name => 'To',
+            Data => [ 10, 10 ],
         },
     ];
 
@@ -94,7 +96,7 @@ sub GenerateResponse {
 
     my $MapConfig;
     TEMPLATE:
-    for my $CurrConf ( values %{ $Templates } ) {
+    for my $CurrConf ( values %{$Templates} ) {
         if ( $CurrConf->{Action} eq $Param{OriginalAction} ) {
             $MapConfig = $CurrConf;
             last TEMPLATE;
@@ -127,14 +129,14 @@ sub GenerateResponse {
 
             %Info = $Backend{BackendObject}->GatherInfo(
                 %Param,
-                Class => $Backend{Class},
+                Class      => $Backend{Class},
                 BackendDef => $BackendDef{ $Backend{Class} },
             );
         }
         else {
             my $BackendObject = $Kernel::OM->Get( $BackendDef{$Category}{Backend} );
             %Info = $BackendObject->GatherInfo(
-                Class => $Category,
+                Class      => $Category,
                 BackendDef => $BackendDef{$Category},
             );
         }
@@ -152,17 +154,17 @@ sub GenerateResponse {
                 }
             ];
         }
-        elsif ( %Info ) {
-             if ( $Info{From}[0] < $Return->[0]->{Data}->[0] ) { $Return->[0]->{Data}->[0] = $Info{From}[0] }
-             if ( $Info{From}[1] < $Return->[0]->{Data}->[1] ) { $Return->[0]->{Data}->[1] = $Info{From}[1] }
-             if ( $Info{To}[0]   > $Return->[1]->{Data}->[0] ) { $Return->[1]->{Data}->[0] = $Info{To}[0] }
-             if ( $Info{To}[1]   > $Return->[1]->{Data}->[1] ) { $Return->[1]->{Data}->[1] = $Info{To}[1] }
+        elsif (%Info) {
+            if ( $Info{From}[0] < $Return->[0]->{Data}->[0] ) { $Return->[0]->{Data}->[0] = $Info{From}[0] }
+            if ( $Info{From}[1] < $Return->[0]->{Data}->[1] ) { $Return->[0]->{Data}->[1] = $Info{From}[1] }
+            if ( $Info{To}[0] > $Return->[1]->{Data}->[0] )   { $Return->[1]->{Data}->[0] = $Info{To}[0] }
+            if ( $Info{To}[1] > $Return->[1]->{Data}->[1] )   { $Return->[1]->{Data}->[1] = $Info{To}[1] }
         }
 
         # gather icon info
         if ( $Info{Icons} ) {
             if ( $Info{Icons}{Latitude} && $Info{Icons}{Longitude} ) {
-                for my $Key ( qw/Latitude Longitude Path Link Description/ ) {
+                for my $Key (qw/Latitude Longitude Path Link Description/) {
                     if ( defined $Info{Icons}{$Key} ) {
                         for my $i ( 0 .. $#{ $Info{Icons}{Latitude} } ) {
                             push @{ $Icons{$Key} }, $Info{Icons}{$Key}[$i];
@@ -176,11 +178,11 @@ sub GenerateResponse {
                 }
             }
         }
-    
+
         # gather line info
         if ( $Info{Lines} ) {
             if ( $Info{Lines}{From0} ) {
-                for my $Key ( qw/From0 To0 From1 To1 Color Link Description Weight/ ) {
+                for my $Key (qw/From0 To0 From1 To1 Color Link Description Weight/) {
                     if ( defined $Info{Lines}{$Key} ) {
                         for my $i ( 0 .. $#{ $Info{Lines}{From0} } ) {
                             push @{ $Lines{$Key} }, $Info{Lines}{$Key}[$i];
@@ -195,7 +197,7 @@ sub GenerateResponse {
             }
         }
     }
-    
+
     if ( !defined $Return ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'debug',
@@ -205,31 +207,37 @@ sub GenerateResponse {
     }
 
     # if no coordinates where provided
-    for my $i (0,1) {
-        for my $j (0,1) {
+    for my $i ( 0, 1 ) {
+        for my $j ( 0, 1 ) {
             $Return->[$i]->{Data}->[$j] //= 0;
         }
     }
 
     # margin is either a fraction of the map cutout, or, if it is to small, the predefined margin
-    my $Margin = ( sort {$a<=>$b} ( $MapConfig->{Margin}, 0.08*($Return->[0]->{Data}->[1] - $Return->[0]->{Data}->[0]), 0.08*($Return->[1]->{Data}->[1] - $Return->[1]->{Data}->[0]) ) )[-1];
+    my $Margin = (
+        sort { $a <=> $b } (
+            $MapConfig->{Margin},
+            0.08 * ( $Return->[0]->{Data}->[1] - $Return->[0]->{Data}->[0] ),
+            0.08 * ( $Return->[1]->{Data}->[1] - $Return->[1]->{Data}->[0] )
+        )
+    )[-1];
 
     $Return->[0]->{Data}->[0] -= $Margin;
     $Return->[0]->{Data}->[1] -= $Margin;
     $Return->[1]->{Data}->[0] += $Margin;
     $Return->[1]->{Data}->[1] += $Margin;
 
-    if ( %Icons ) {
-        push @{ $Return }, {
+    if (%Icons) {
+        push @{$Return}, {
             Name => 'Icons',
             Data => \%Icons,
-        }
+        };
     }
-    if ( %Lines ) {
-        push @{ $Return }, {
+    if (%Lines) {
+        push @{$Return}, {
             Name => 'Lines',
             Data => \%Lines,
-        }
+        };
     }
 
     return $Return;
@@ -238,7 +246,7 @@ sub GenerateResponse {
 
 =head2 _BackendGet()
 
-Provides the backend in dependance of the site visited.
+Provides the backend in dependence of the site visited.
 
     my $BackendObject = $OSMObject->_BackendGet(
         OriginalAction => 'Action',
@@ -251,7 +259,7 @@ sub _BackendGet {
     my ( $Self, %Param ) = @_;
 
     # check for needed data
-    for my $Needed ( qw/OriginalAction BackendDef/ ) {
+    for my $Needed (qw/OriginalAction BackendDef/) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -268,8 +276,8 @@ sub _BackendGet {
                 Message  => 'Need ConfigItemID!',
             );
             return;
-        }   
-        
+        }
+
         my $CI = $Kernel::OM->Get('Kernel::System::ITSMConfigItem')->ConfigItemGet(
             ConfigItemID => $Param{ConfigItemID},
         );
@@ -282,12 +290,11 @@ sub _BackendGet {
             BackendObject => $Kernel::OM->Get( $Param{BackendDef}{ $CI->{Class} }{Backend} ),
             Class         => $CI->{Class},
         );
-    }              
-                   
-    return;        
-                   
-}                  
-                   
+    }
+
+    return;
+
+}
 
 1;
 

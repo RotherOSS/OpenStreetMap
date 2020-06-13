@@ -14,6 +14,10 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::Config',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::ITSMConfigItem',
+    'Kernel::System::LinkObject',
 );
 
 =head1 NAME
@@ -59,9 +63,9 @@ Gathers location and icon info.
 
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
-    
+
     # check for needed data
-    for my $Needed ( qw/BackendDef Class/ ) {
+    for my $Needed (qw/BackendDef Class/) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -81,18 +85,21 @@ sub GatherInfo {
     }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-        my %ClassToID = reverse %{ $GeneralCatalogObject->ItemList(Class => 'ITSM::ConfigItem::Class') };
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
 
-        push @CIs, @{ $ConfigItemObject->ConfigItemResultList(
-            ClassID => $ClassToID{ $Param{Class} },
-        ) };
+        push @CIs, @{
+            $ConfigItemObject->ConfigItemResultList(
+                ClassID => $ClassToID{ $Param{Class} },
+            )
+        };
     }
 
     my $LinkObject = $Kernel::OM->Get('Kernel::System::LinkObject');
 
     # get the configurations for the class backends
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
-    my %LinkBackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+    my %LinkBackendDef
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
 
     # color definitions
     my $IncidentStateColors;
@@ -100,43 +107,47 @@ sub GatherInfo {
         $IncidentStateColors = $ConfigObject->Get('RotherOSSOpenStreetMap::IncidentStateColors');
     }
 
-#use Data::Dumper;
-#print STDERR "vo60 - CIs: ".Dumper(\@CIs);
+    #use Data::Dumper;
+    #print STDERR "vo60 - CIs: ".Dumper(\@CIs);
     my ( $From, $To, %Icons, %Lines );
     CI:
-    for my $ConfigItem ( @CIs ) {
+    for my $ConfigItem (@CIs) {
 
         my $LinkList = $LinkObject->LinkListWithData(
-            Object                          => 'ITSMConfigItem',
-            Key                             => $ConfigItem->{ConfigItemID},
-            State                           => 'Valid',
-            UserID                          => 1,
+            Object => 'ITSMConfigItem',
+            Key    => $ConfigItem->{ConfigItemID},
+            State  => 'Valid',
+            UserID => 1,
         );
 
         my @Ends;
 
         LINKS:
-        for my $LTypes ( values %{ $LinkList } ) {
-          for my $LDirs ( values %{ $LTypes } ) {
-            for my $CINums ( values %{ $LDirs } ) {
-              for my $LinkedItem ( values %{ $CINums } ) {
+        for my $LTypes ( values %{$LinkList} ) {
+            for my $LDirs ( values %{$LTypes} ) {
+                for my $CINums ( values %{$LDirs} ) {
+                    for my $LinkedItem ( values %{$CINums} ) {
 
-                if ( !$Ends[0] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] ) {
-                    $Ends[0] = $LinkedItem->{ConfigItemID};
-                    if ( $Ends[1] ) {
-                        last LINKS;
+                        if ( !$Ends[0] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[0] ) {
+                            $Ends[0] = $LinkedItem->{ConfigItemID};
+                            if ( $Ends[1] ) {
+                                last LINKS;
+                            }
+                        }
+                        elsif (
+                            !$Ends[1]
+                            && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[1]
+                            )
+                        {
+                            $Ends[1] = $LinkedItem->{ConfigItemID};
+                            if ( $Ends[0] ) {
+                                last LINKS;
+                            }
+                        }
+
                     }
                 }
-                elsif ( !$Ends[1] && $LinkedItem->{Class} eq $Param{BackendDef}{LocationInfo}{LinkedClasses}[1] ) {
-                    $Ends[1] = $LinkedItem->{ConfigItemID};
-                    if ( $Ends[0] ) {
-                        last LINKS;
-                    }
-                }
-
-              }
             }
-          }
         }
 
         if ( @Ends != 2 ) {
@@ -149,7 +160,8 @@ sub GatherInfo {
 
         my @Info;
         for my $i ( 0, 1 ) {
-            my $BackendObject = $Kernel::OM->Get( $LinkBackendDef{ $Param{BackendDef}{LocationInfo}{LinkedClasses}[$i] }{Backend} );
+            my $BackendObject
+                = $Kernel::OM->Get( $LinkBackendDef{ $Param{BackendDef}{LocationInfo}{LinkedClasses}[$i] }{Backend} );
 
             %{ $Info[$i] } = $BackendObject->GatherInfo(
                 ConfigItemID => $Ends[$i],
@@ -171,38 +183,45 @@ sub GatherInfo {
             # define coordinates
             if ( !$From ) {
                 $From = [ $Info[$i]{From}[0], $Info[$i]{From}[1] ];
-                $To   = [ $Info[$i]{To}[0], $Info[$i]{To}[1] ];
+                $To   = [ $Info[$i]{To}[0],   $Info[$i]{To}[1] ];
             }
             else {
                 if ( $From->[0] > $Info[$i]{From}[0] ) { $From->[0] = $Info[$i]{From}[0] }
                 if ( $From->[1] > $Info[$i]{From}[1] ) { $From->[1] = $Info[$i]{From}[1] }
-                if ( $To->[0]   < $Info[$i]{To}[0] )   { $To->[0]   = $Info[$i]{To}[0] }
-                if ( $To->[1]   < $Info[$i]{To}[1] )   { $To->[1]   = $Info[$i]{To}[1] }
+                if ( $To->[0] < $Info[$i]{To}[0] )     { $To->[0]   = $Info[$i]{To}[0] }
+                if ( $To->[1] < $Info[$i]{To}[1] )     { $To->[1]   = $Info[$i]{To}[1] }
             }
-        
+
             # add icons if only this ConfigItem is shown
-            if ( $Param{ConfigItemID} && $Info[$i]{Icons}) {
-                for my $Attr ( qw/Path Latitude Longitude Link/ ) {
+            if ( $Param{ConfigItemID} && $Info[$i]{Icons} ) {
+                for my $Attr (qw/Path Latitude Longitude Link/) {
                     push @{ $Icons{$Attr} }, @{ $Info[$i]{Icons}{$Attr} };
                 }
             }
         }
 
-#use Data::Dumper;
-#print STDERR "vo60 - CI: ".Dumper($ConfigItem);
+        #use Data::Dumper;
+        #print STDERR "vo60 - CI: ".Dumper($ConfigItem);
         # add line
-        push @{ $Lines{From0} },  $Info[0]{From}[0];
-        push @{ $Lines{From1} },  $Info[0]{From}[1];
-        push @{ $Lines{To0} },    $Info[1]{From}[0];
-        push @{ $Lines{To1} },    $Info[1]{From}[1];
-        push @{ $Lines{Color} },  $IncidentStateColors ? $IncidentStateColors->{ $ConfigItem->{CurInciState} } || "#552244" : $Param{BackendDef}{LineColor} || "#552244";
+        push @{ $Lines{From0} }, $Info[0]{From}[0];
+        push @{ $Lines{From1} }, $Info[0]{From}[1];
+        push @{ $Lines{To0} },   $Info[1]{From}[0];
+        push @{ $Lines{To1} },   $Info[1]{From}[1];
+        push @{ $Lines{Color} },
+            $IncidentStateColors
+            ? $IncidentStateColors->{ $ConfigItem->{CurInciState} } || "#552244"
+            : $Param{BackendDef}{LineColor} || "#552244";
         push @{ $Lines{Weight} }, $Param{BackendDef}{LineWidth} || 5;
-        push @{ $Lines{Link} },   ( $Param{BackendDef}{LinkSelf} ) ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}" : '';
+        push @{ $Lines{Link} },
+            ( $Param{BackendDef}{LinkSelf} )
+            ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}"
+            : '';
 
     }
-#use Data::Dumper;
-#print STDERR "vo60 - Icons: ".Dumper(\%Icons);
-#print STDERR "vo60 - Lines: ".Dumper(\%Lines);
+
+    #use Data::Dumper;
+    #print STDERR "vo60 - Icons: ".Dumper(\%Icons);
+    #print STDERR "vo60 - Lines: ".Dumper(\%Lines);
 
     return (
         From  => $From,
@@ -212,7 +231,6 @@ sub GatherInfo {
     );
 
 }
-
 
 1;
 

@@ -14,6 +14,8 @@ use warnings;
 
 our @ObjectDependencies = (
     'Kernel::System::Log',
+    'Kernel::System::GeneralCatalog',
+    'Kernel::System::ITSMConfigItem',
 );
 
 =head1 NAME
@@ -59,9 +61,9 @@ Gathers location and icon info.
 
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
-    
+
     # check for needed data
-    for my $Needed ( qw/BackendDef Class/ ) {
+    for my $Needed (qw/BackendDef Class/) {
         if ( !defined $Param{$Needed} ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
@@ -81,16 +83,18 @@ sub GatherInfo {
     }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-        my %ClassToID = reverse %{ $GeneralCatalogObject->ItemList(Class => 'ITSM::ConfigItem::Class') };
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
 
-        push @CIs, @{ $ConfigItemObject->ConfigItemResultList(
-            ClassID => $ClassToID{ $Param{Class} },
-        ) };
+        push @CIs, @{
+            $ConfigItemObject->ConfigItemResultList(
+                ClassID => $ClassToID{ $Param{Class} },
+            )
+        };
     }
 
     my ( $From, $To, %Icons );
     CI:
-    for my $ConfigItem ( @CIs ) {
+    for my $ConfigItem (@CIs) {
 
         my $Version = $ConfigItemObject->VersionGet(
             VersionID => $ConfigItem->{LastVersionID},
@@ -102,17 +106,17 @@ sub GatherInfo {
         if ( !defined $Latitude || !defined $Longitude ) {
             next CI;
         }
-        
+
         # define coordinates
         if ( !$From ) {
-            $From = [$Latitude, $Longitude];
-            $To   = [$Latitude, $Longitude];
+            $From = [ $Latitude, $Longitude ];
+            $To   = [ $Latitude, $Longitude ];
         }
         else {
             if ( $From->[0] > $Latitude )  { $From->[0] = $Latitude }
             if ( $From->[1] > $Longitude ) { $From->[1] = $Longitude }
-            if ( $To->[0]   < $Latitude )  { $To->[0]   = $Latitude }
-            if ( $To->[1]   < $Longitude ) { $To->[1]   = $Longitude }
+            if ( $To->[0] < $Latitude )    { $To->[0]   = $Latitude }
+            if ( $To->[1] < $Longitude )   { $To->[1]   = $Longitude }
         }
 
         # place Icon
@@ -120,7 +124,10 @@ sub GatherInfo {
             push @{ $Icons{Path} },      $Param{BackendDef}{IconPath};
             push @{ $Icons{Latitude} },  $Latitude;
             push @{ $Icons{Longitude} }, $Longitude;
-            push @{ $Icons{Link} },      ( $Param{BackendDef}{LinkSelf} ) ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}" : '';
+            push @{ $Icons{Link} },
+                ( $Param{BackendDef}{LinkSelf} )
+                ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}"
+                : '';
         }
     }
 
@@ -131,7 +138,6 @@ sub GatherInfo {
     );
 
 }
-
 
 1;
 
