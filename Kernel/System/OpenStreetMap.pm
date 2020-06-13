@@ -204,6 +204,13 @@ sub GenerateResponse {
         return $ReturnErr;
     }
 
+    # if no coordinates where provided
+    for my $i (0,1) {
+        for my $j (0,1) {
+            $Return->[$i]->{Data}->[$j] //= 0;
+        }
+    }
+
     # margin is either a fraction of the map cutout, or, if it is to small, the predefined margin
     my $Margin = ( sort {$a<=>$b} ( $MapConfig->{Margin}, 0.08*($Return->[0]->{Data}->[1] - $Return->[0]->{Data}->[0]), 0.08*($Return->[1]->{Data}->[1] - $Return->[1]->{Data}->[0]) ) )[-1];
 

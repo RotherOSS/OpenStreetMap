@@ -15,14 +15,48 @@
         <Navigation>RotherOSSOpenStreetMap</Navigation>
         <Value>
             <Hash> 
-                <Item Key="Operational">#20b080</Item>
-                <Item Key="Warning">#d0a040</Item>
+                <Item Key="Operational">#22e5a0</Item>
+                <Item Key="Warning">#e0d040</Item>
                 <Item Key="Incident">#ff3000</Item>
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Loader::Module::OpenStreetMap###002-Ticket" Required="0" Valid="1">
+    <Setting Name="Loader::Module::OpenStreetMap###437-OSM" Required="0" Valid="1">
         <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.OpenStreetMap.js</Item>
+                    </Array>
+                </Item>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.OpenStreetMap.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentDashboard###437-OSM" Required="0" Valid="1">
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.OpenStreetMap.js</Item>
+                    </Array>
+                </Item>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.OpenStreetMap.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentITSMConfigItemZoom###437-OSM" Required="0" Valid="1">
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
         <Value>
             <Hash>
@@ -107,6 +141,20 @@
                 <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
                 <Item Key="Mandatory">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="Frontend::Output::FilterElementPost###OutputFilterPostOpenStreetMapCIWidget" Required="0" Valid="1">
+        <Description Translatable="1">Output filter to add an OpenStreetMap widget to the AgentITSMConfigItemZoom screen.</Description>
+        <Navigation>Frontend::Base::OutputFilter</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::OpenStreetMapCIWidget</Item>
+                <Item Key="Templates">
+                    <Hash>
+                        <Item Key="AgentITSMConfigItemZoom">1</Item>
+                    </Hash>
+                </Item>
             </Hash>
         </Value>
     </Setting>

@@ -7,8 +7,6 @@
     <License>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</License>
     <Description Lang="en">Adds an interface to OpenStreetMap.</Description>
     <Filelist>
-        <File Permission="644" Location="Custom/Kernel/Output/HTML/Templates/Standard/AgentITSMConfigItemZoom.tt" />
-        <File Permission="644" Location="Custom/Kernel/Modules/AgentITSMConfigItemZoom.pm" />
         <File Permission="644" Location="Kernel/Config/Files/XML/RotherOSSOpenStreetMap.xml" />
         <File Permission="644" Location="Kernel/Output/HTML/Dashboard/OpenStreetMap.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMap.tt" />
@@ -21,6 +19,8 @@
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/leaflet-1.4.0/leaflet.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/leaflet-1.4.0/leaflet.css" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/Location.png" />
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/OpenStreetMapCIWidget.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMapWidget.tt" />
     </Filelist>
 </otrs_package>
 
