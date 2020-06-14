@@ -94,7 +94,7 @@ Core.OpenStreetMap = (function (TargetNS) {
                         Icon = L.marker([Icons['Latitude'][i], Icons['Longitude'][i]]).addTo(map);
                     }
                     else {
-                        var Logo = L.icon({ iconUrl: Icons['Path'][i], iconSize: [10, 15], iconAnchor: [0, 15] });
+                        var Logo = L.icon({ iconUrl: Icons['Path'][i], iconSize: [10, 15], iconAnchor: [5, 15] });
                         Icon = L.marker([Icons['Latitude'][i], Icons['Longitude'][i]], {icon: Logo});
                         Icon.addTo(map);
                     }
