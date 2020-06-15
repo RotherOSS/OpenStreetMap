@@ -26,5 +26,6 @@
         <File Permission="660" Location="Kernel/System/OpenStreetMap/LocalObject.pm" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/img/Location.svg" />
         <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/nvd3-1.7.1/nv.d3.css" />
+        <File Permission="660" Location="var/httpd/htdocs/skins/Agent/default/css/Core.OpenStreetMap.css" />
     </Filelist>
 </otrs_package>
