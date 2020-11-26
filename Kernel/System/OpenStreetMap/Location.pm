@@ -1,10 +1,17 @@
 # --
-# Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
-# Copyright (C) 2019 Rother OSS GmbH, https://otrs.ch/
+# OTOBO is a web-based ticketing system for service organisations.
 # --
-# This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
+# Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
+# Copyright (C) 2019-2020 Rother OSS GmbH, https://otobo.de/
+# --
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 # --
 
 package Kernel::System::OpenStreetMap::Location;
@@ -53,7 +60,6 @@ Gathers location and icon info.
     my %Info = $BackendObject->GatherInfo(
         Class        => 'Location_Class',
         BackendDef   => $BackendDef,
-        IconPath     => 'var/httpd/htdocs/RotherOSS-OpenStreetMap/' # optional
         ConfigItemID => 123,                                        # optional: only consider ConfigItemID 123, instead of whole class
     );
 
@@ -92,6 +98,25 @@ sub GatherInfo {
         };
     }
 
+    my $IconObject;
+    if ( $Param{BackendDef}{IconOverride} ) {
+        my $OverrideConfig = $Kernel::OM->Get('Kernel::Config')->Get('RotherOSSOpenStreetMap::IconOverride')->{ $Param{BackendDef}{IconOverride} };
+
+        # load the module
+        if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($OverrideConfig->{Module}) ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Can't load the override module $OverrideConfig->{Module}!"
+            );
+            return;
+        }
+
+        # create new instance
+        $IconObject = $OverrideConfig->{Module}->new(
+            %{ $OverrideConfig },
+        );
+    }
+
     my ( $From, $To, %Icons );
     CI:
     for my $ConfigItem (@CIs) {
@@ -119,9 +144,20 @@ sub GatherInfo {
             if ( $To->[1] < $Longitude )   { $To->[1]   = $Longitude }
         }
 
+        my $Icon = $Param{BackendDef}{IconPath};
+        if ( $Param{BackendDef}{IconOverride} ) {
+            my $OverrideIcon = $IconObject->GetIcon(
+                Version => $Version,
+            );
+
+            if ( $OverrideIcon ) {
+                $Icon = $OverrideIcon;
+            }
+        }
+
         # place Icon
-        if ( $Param{BackendDef}{IconPath} ) {
-            push @{ $Icons{Path} },      $Param{BackendDef}{IconPath};
+        if ( $Icon ) {
+            push @{ $Icons{Path} },      $Icon;
             push @{ $Icons{Latitude} },  $Latitude;
             push @{ $Icons{Longitude} }, $Longitude;
             push @{ $Icons{Link} },
@@ -143,7 +179,7 @@ sub GatherInfo {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (L<https://otrs.org/>).
+This software is part of the OTOBO project (L<https://otobo.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you

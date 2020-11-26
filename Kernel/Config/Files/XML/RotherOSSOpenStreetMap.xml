@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<otrs_config version="2.0" init="Application">
+<otobo_config version="2.0" init="Application">
     <Setting Name="RotherOSSOpenStreetMap::ShowForClasses" Required="0" Valid="1">
         <Description Translatable="1">For which classes the map is displayed.</Description>
         <Navigation>Core::RotherOSSOpenStreetMap</Navigation>
@@ -167,7 +167,8 @@
             <Hash>
                 <Item Key="Class">Location</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Location</Item>
-                <Item Key="IconPath">/otrs-web/skins/Agent/default/img/Location.png</Item>
+                <Item Key="IconPath">/otobo-web/skins/Agent/default/img/Location.svg</Item>
+                <Item Key="IconOverride">Override01</Item>
                 <Item Key="LocationInfo">
                     <Hash>
                         <Item Key="SourceKeys">
@@ -475,4 +476,32 @@
             </Hash>
         </Value>
     </Setting>
-</otrs_config>
+    <Setting Name="RotherOSSOpenStreetMap::IconOverride###BasicCIInfo01" Required="0" Valid="0">
+        <Description Translatable="1">Overrides the default icon based on config item information. Define "States" and assign "IconPaths" to them.</Description>
+        <Navigation>Core::RotherOSSOpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::System::OpenStreetMap::Icons::BasicCIInfo</Item>
+                <Item Key="States">
+                    <Hash>
+                        <DefaultItem>
+                            <Hash>
+                            </Hash>
+                        </DefaultItem>
+                        <Item Key="Danger">
+                            <Hash>
+                                <Item Key="CurInciState">Incident</Item>
+                                <Item Key="CurDeplState">Production</Item>
+                            </Hash>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="IconPaths">
+                    <Hash>
+                        <Item Key="Danger">/otobo-web/skins/Agent/default/img/LocationRed.svg</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+</otobo_config>

@@ -1,11 +1,17 @@
 // --
+// OTOBO is a web-based ticketing system for service organisations.
+// --
 // Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
-// Copyright (C) 2019 Rother OSS GmbH, https://otrs.ch/
+// Copyright (C) 2019-2020 Rother OSS GmbH, https://otobo.de/
 // --
-// This software comes with ABSOLUTELY NO WARRANTY. For details, see
-// the enclosed file COPYING for license information (GPL). If you
-// did not receive this file, see https://www.gnu.org/licenses/gpl-3.0.txt.
-// --
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later version.
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 "use strict";
 
@@ -23,10 +29,10 @@ Core.OpenStreetMap = (function (TargetNS) {
 
     TargetNS.CreateMap = function () {
         // CSS laden
-        TargetNS.LoadCSS("/otrs-web/skins/Agent/default/css/thirdparty/leaflet-1.4.0/leaflet.css");
+        TargetNS.LoadCSS("/otobo-web/skins/Agent/default/css/thirdparty/leaflet-1.4.0/leaflet.css");
 
         // Leafletscript laden
-        TargetNS.LoadScript("/otrs-web/js/thirdparty/leaflet-1.4.0/leaflet.js", TargetNS.MapScript);
+        TargetNS.LoadScript("/otobo-web/js/thirdparty/leaflet-1.4.0/leaflet.js", TargetNS.MapScript);
     };
 
     TargetNS.MapScript = function () {
@@ -37,7 +43,7 @@ Core.OpenStreetMap = (function (TargetNS) {
         // Karten anlegen
 
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//        var osm = L.tileLayer('https://maps.otrs.ch/hot/{z}/{x}/{y}.png', {
+//        var osm = L.tileLayer('https://maps.otobo.ch/hot/{z}/{x}/{y}.png', {
             maxZoom: 10,
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>'
         });
