@@ -43,8 +43,7 @@ Core.OpenStreetMap = (function (TargetNS) {
         // Karten anlegen
 
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//        var osm = L.tileLayer('https://maps.otobo.ch/hot/{z}/{x}/{y}.png', {
-            maxZoom: 10,
+            maxZoom: 20,
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>'
         });
 
