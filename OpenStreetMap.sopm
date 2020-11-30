@@ -14,6 +14,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMap.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMapWidget.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardOpenStreetMap.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/Dashboard/TileOSMCanvas.tt" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Line.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Location.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Icons/BasicCIInfo.pm" />
@@ -26,5 +27,6 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/thirdparty/nvd3-1.7.1/nv.d3.css" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/Location.svg" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/LocationRed.svg" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.OpenStreetMap.css" />
     </Filelist>
 </otobo_package>
