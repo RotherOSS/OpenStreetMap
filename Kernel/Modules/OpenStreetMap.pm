@@ -46,9 +46,6 @@ sub Run {
         $GetParam{$Attribute} = $ParamObject->GetParam( Param => $Attribute );
     }
 
-    #use Data::Dumper;
-    #print STDERR "vo60 - GP: ".Dumper(\%GetParam);
-
     # AJAX function call
     if ( $GetParam{OriginalAction} ) {
 

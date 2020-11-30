@@ -57,6 +57,24 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="Loader::Module::CustomerDashboard###437-OSM" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="JavaScript">
+                    <Array>
+                        <Item>Core.OpenStreetMap.js</Item>
+                    </Array>
+                </Item>
+                <Item Key="CSS">
+                    <Array>
+                        <Item>Core.OpenStreetMap.css</Item>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="Loader::Module::AgentITSMConfigItemZoom###437-OSM" Required="0" Valid="1">
         <Description Translatable="1">Loader module registration for the agent interface.</Description>
         <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
@@ -459,9 +477,13 @@
         <Navigation>Core::RotherOSSOpenStreetMap::ActionConfig</Navigation>
         <Value>
             <Hash>
-                <Item Key="Action"></Item>
-                <Item Key="Show"><Array></Array></Item>
-                <Item Key="Margin"></Item>
+                <Item Key="Action">CustomerDashboard</Item>
+                <Item Key="Show">
+                    <Array>
+                        <Item>Location</Item>
+                    </Array>
+                </Item>
+                <Item Key="Margin">0.4</Item>
             </Hash>
         </Value>
     </Setting>
@@ -499,6 +521,20 @@
                 <Item Key="IconPaths">
                     <Hash>
                         <Item Key="Danger">/otobo-web/skins/Agent/default/img/LocationRed.svg</Item>
+                    </Hash>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerDashboard::Tiles###OpenStreetMap" Required="0" Valid="0">
+        <Description Translatable="1">Tile registration for the CustomerDashboard. Module is required.</Description>
+        <Navigation>Frontend::Customer::View::Dashboard::Tiles</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Order">7</Item>
+                <Item Key="Template">Dashboard/TileNewTicket</Item>
+                <Item Key="Config">
+                    <Hash>
                     </Hash>
                 </Item>
             </Hash>
