@@ -95,7 +95,7 @@
     </Setting>
     <Setting Name="Frontend::Module###OpenStreetMap" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
-        <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
         <Value>
             <Item ValueType="FrontendRegistration">
                 <Hash>
@@ -143,6 +143,61 @@
                         <Item Key="Block"></Item>
                         <Item Key="AccessKey"></Item>
                         <Item Key="Prio">210</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Module###OpenStreetMap" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">OpenStreetMap</Item>
+                    <Item Key="Title" Translatable="1">OpenStreetMap</Item>
+                    <Item Key="NavBarName">Map</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="CustomerFrontend::Navigation###OpenStreetMap###002-OpenStreetMap" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1">Show the OpenStreetMap</Item>
+                        <Item Key="Name" Translatable="1">Map</Item>
+                        <Item Key="Link">Action=CustomerDashboard</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Map</Item>
+                        <Item Key="Type">Menu</Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey">o</Item>
+                        <Item Key="Prio">270</Item>
+                        <Item Key="svgIcon">var/httpd/htdocs/skins/Customer/default/img/map.svg</Item>
                     </Hash>
                 </Item>
             </Array>
