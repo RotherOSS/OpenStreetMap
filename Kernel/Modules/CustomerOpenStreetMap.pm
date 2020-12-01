@@ -73,7 +73,7 @@ sub Run {
 
         my $Output = $LayoutObject->CustomerHeader();
         $Output .= $LayoutObject->Output(
-            TemplateFile => 'CustomerDashboard',
+            TemplateFile => 'CustomerOpenStreetMap',
             Data         => {
                 Title => $Self->{ModuleReg}{Title} || 'Map',
             },
