@@ -88,6 +88,7 @@ sub GenerateResponse {
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+    # get the templates for all actions
     my $Templates = $ConfigObject->Get('OpenStreetMap::ActionConfig');
     if ( !$Templates ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -97,10 +98,12 @@ sub GenerateResponse {
         return $ReturnErr;
     }
 
-    if ( $Param{OriginalAction} eq 'CommonAction' ) {
-        $Param{OriginalAction} = $ConfigObject->Get('Frontend::CommonParam')->{'Action'} || 'CommonAction';
+    if ( $Param{OriginalAction} eq 'CommonAction' ) {    
+        $Param{OriginalAction} = $Param{UserID} ? ( $ConfigObject->Get('Frontend::CommonParam')->{'Action'} || 'CommonAction' ) :
+            ( $ConfigObject->Get('CustomerFrontend::CommonParam')->{'Action'} || 'CustomerCommonAction' );
     }
 
+    # get the map config for the current action
     my $MapConfig;
     TEMPLATE:
     for my $CurrConf ( values %{$Templates} ) {
@@ -118,35 +121,94 @@ sub GenerateResponse {
         return $ReturnErr;
     }
 
+    my $ConfigItemObject     = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
+    my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+    my $CustomerGroupObject  = ( $Param{CustomerUserID} && $ConfigObject->Get('CustomerGroupSupport') ) ? $Kernel::OM->Get('Kernel::System::CustomerGroup') : undef;
+
+    # get class list
+    my %ClassIDs;
+    {
+        my $ClassList = $GeneralCatalogObject->ItemList(
+            Class => 'ITSM::ConfigItem::Class',
+        );
+        %ClassIDs = reverse %{ $ClassList };
+    }
+
     # get the configurations for the class backends
     my %BackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
 
     my ( $Return, %Icons, %Lines );
+    CATEGORY:
     for my $Category ( @{ $MapConfig->{Show} } ) {
-        my %Info;
+        my %Data;
         if ( $Category eq 'Self' ) {
-            my %Backend = $Self->_BackendGet(
+            %Data = $Self->_ClassGet(
                 %Param,
                 BackendDef => \%BackendDef,
             );
 
-            if ( !%Backend ) {
+            if ( !$Data{Class} ) {
                 return $ReturnErr;
             }
 
-            %Info = $Backend{BackendObject}->GatherInfo(
+            # Add ConfigItemID or similar
+            %Data = (
                 %Param,
-                Class      => $Backend{Class},
-                BackendDef => $BackendDef{ $Backend{Class} },
+                %Data,
             );
         }
         else {
-            my $BackendObject = $Kernel::OM->Get( $BackendDef{$Category}{Backend} );
-            %Info = $BackendObject->GatherInfo(
-                Class      => $Category,
-                BackendDef => $BackendDef{$Category},
+            %Data = (
+                Class   => $Category,
+                ClassID => $ClassIDs{ $Category },
             );
         }
+
+        # show items only if user has access rights
+        my $HasAccess;
+        # agents
+        if ( $Param{UserID} ) {
+            $HasAccess = $ConfigItemObject->Permission(
+                Scope   => 'Class',
+                ClassID => $Data{ClassID},
+                UserID  => $Param{UserID},
+                Type    => 'ro',
+                LogNo   => 1,
+            );
+        }
+
+        # customer users with group support
+        elsif ( $CustomerGroupObject ) {
+            my $ClassItem = $GeneralCatalogObject->ItemGet(
+                ItemID => $Data{ClassID},
+            );
+            # get user groups
+            my @GroupIDs = $CustomerGroupObject->GroupMemberList(
+                UserID => $Param{CustomerUserID},
+                Type   => 'ro',
+                Result => 'ID',
+            );
+            # looking for group id
+            GROUP:
+            for my $GroupID (@GroupIDs) {
+                if ( $ClassItem->{Permission} && $GroupID eq $ClassItem->{Permission} ) {
+                    $HasAccess = 1;
+                    last GROUP;
+                }
+            }
+        }
+
+        # customer users without group support (show everything which is configured)
+        elsif ( $Param{CustomerUserID} ) {
+            $HasAccess = 1;
+        }
+
+        next CATEGORY if !$HasAccess;
+
+        my %Info = $Kernel::OM->Get( $BackendDef{ $Data{Class} }{Backend} )->GatherInfo(
+            %Data,
+            BackendDef => $BackendDef{ $Data{Class} },
+        );
 
         # Adjust map cutout
         if ( !defined $Return && %Info ) {
@@ -166,6 +228,9 @@ sub GenerateResponse {
             if ( $Info{From}[1] < $Return->[0]->{Data}->[1] ) { $Return->[0]->{Data}->[1] = $Info{From}[1] }
             if ( $Info{To}[0] > $Return->[1]->{Data}->[0] )   { $Return->[1]->{Data}->[0] = $Info{To}[0] }
             if ( $Info{To}[1] > $Return->[1]->{Data}->[1] )   { $Return->[1]->{Data}->[1] = $Info{To}[1] }
+        }
+        else {
+             next CATEGORY;
         }
 
         # gather icon info
@@ -251,18 +316,18 @@ sub GenerateResponse {
 
 }
 
-=head2 _BackendGet()
+=head2 _ClassGet()
 
-Provides the backend in dependence of the site visited.
+Provides the class in dependence of the site visited.
 
-    my $BackendObject = $OSMObject->_BackendGet(
+    my ( $ClassID, $Class ) = $OSMObject->_ClassGet(
         OriginalAction => 'Action',
         %GetParam,
     );
 
 =cut
 
-sub _BackendGet {
+sub _ClassGet {
     my ( $Self, %Param ) = @_;
 
     # check for needed data
@@ -293,9 +358,9 @@ sub _BackendGet {
             return;
         }
 
-        return (
-            BackendObject => $Kernel::OM->Get( $Param{BackendDef}{ $CI->{Class} }{Backend} ),
-            Class         => $CI->{Class},
+        return ( 
+            ClassID => $CI->{ClassID},
+            Class   => $CI->{Class},
         );
     }
 
