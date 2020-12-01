@@ -23,3 +23,45 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     width: 100%;
     margin: 0;
 }
+
+/* CustomerOpenStreetMap */
+@media only screen and (max-width: 767px) {
+    .OSM > #oooHeader,
+    .OSM > #oooCustomerNotifications {
+        display: none;
+    }
+
+    .OSM > #oooMainBox {
+        height: calc( 100vh - 104px );
+        padding: 0;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .OSM > #oooHeader {
+        height: 145px;
+        border-bottom: 1.2px solid #e5e5eb;
+        background-color: #ffffff;
+        display: grid;
+        align-items: center;
+    }
+
+    .OSM > #oooMainBox {
+        height: calc( 100vh - 194.2px );
+        width: 100%;
+        padding: 0;
+    }
+
+    .OSM#oooContent {
+        padding: 0;
+    }
+
+    .OSM > #oooCustomerNotifications {
+        position: fixed;
+        z-index: 1000;
+    }
+
+    .OSM #openstreetmap-canvas .leaflet-left {
+        left: 56px;
+    }
+}

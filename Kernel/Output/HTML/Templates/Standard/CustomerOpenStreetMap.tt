@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 # --
-<div id='oooContent'>
+<div id='oooContent' class='OSM'>
     <div id='oooHeader'>
         <h1>[% Translate(Data.Title) | html %]</h1>
     </div>
