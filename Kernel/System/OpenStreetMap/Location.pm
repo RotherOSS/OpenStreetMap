@@ -100,7 +100,7 @@ sub GatherInfo {
 
     my $IconObject;
     if ( $Param{BackendDef}{IconOverride} ) {
-        my $OverrideConfig = $Kernel::OM->Get('Kernel::Config')->Get('RotherOSSOpenStreetMap::IconOverride')->{ $Param{BackendDef}{IconOverride} };
+        my $OverrideConfig = $Kernel::OM->Get('Kernel::Config')->Get('OpenStreetMap::IconOverride')->{ $Param{BackendDef}{IconOverride} };
 
         # load the module
         if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($OverrideConfig->{Module}) ) {

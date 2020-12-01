@@ -88,7 +88,7 @@ sub GenerateResponse {
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my $Templates = $ConfigObject->Get('RotherOSSOpenStreetMap::ActionConfig');
+    my $Templates = $ConfigObject->Get('OpenStreetMap::ActionConfig');
     if ( !$Templates ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
@@ -119,7 +119,7 @@ sub GenerateResponse {
     }
 
     # get the configurations for the class backends
-    my %BackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+    my %BackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
 
     my ( $Return, %Icons, %Lines );
     for my $Category ( @{ $MapConfig->{Show} } ) {

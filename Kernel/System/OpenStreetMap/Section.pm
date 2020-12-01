@@ -137,7 +137,7 @@ sub GatherInfo {
     # get the configurations for the class backends
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my %LinkBackendDef
-        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
     my $ParentObject = $Kernel::OM->Get( $LinkBackendDef{$ParentClass}{Backend} );
 
     my ( $From, $To, %Icons, %Lines );

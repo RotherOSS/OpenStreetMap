@@ -106,12 +106,12 @@ sub GatherInfo {
     # get the configurations for the class backends
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my %LinkBackendDef
-        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('RotherOSSOpenStreetMap::ClassConfig') };
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
 
     # color definitions
     my $IncidentStateColors;
     if ( $Param{BackendDef}{LineColor} eq "IncidentState" ) {
-        $IncidentStateColors = $ConfigObject->Get('RotherOSSOpenStreetMap::IncidentStateColors');
+        $IncidentStateColors = $ConfigObject->Get('OpenStreetMap::IncidentStateColors');
     }
 
     #use Data::Dumper;

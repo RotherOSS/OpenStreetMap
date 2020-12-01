@@ -13,7 +13,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 # --
 
-package Kernel::Modules::OpenStreetMap;
+package Kernel::Modules::AgentOpenStreetMap;
 
 use strict;
 use warnings;
@@ -53,7 +53,10 @@ sub Run {
         my $OSMObject = $Kernel::OM->Get('Kernel::System::OpenStreetMap');
 
         my $JSON = $LayoutObject->BuildSelectionJSON(
-            $OSMObject->GenerateResponse(%GetParam),
+            $OSMObject->GenerateResponse(
+                %GetParam,
+                UserID => $Self->{UserID},
+            ),
         );
 
         return $LayoutObject->Attachment(
@@ -76,17 +79,9 @@ sub Run {
             Value     => $Self->{RequestedURL},
         );
 
-        # get layout object
-        my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-
-        #        # investigate refresh
-        #        my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
-
         # output header
         my $Output = $LayoutObject->Header(
             Title => Translatable('OpenStreetMap'),
-
-            #            Refresh => $Refresh,
         );
         $Output .= $LayoutObject->NavigationBar();
 

@@ -42,7 +42,7 @@ sub Run {
     my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
 
     # get the active classes
-    my $ShowMapClasses = $ConfigObject->Get('RotherOSSOpenStreetMap::ShowForClasses');
+    my $ShowMapClasses = $ConfigObject->Get('OpenStreetMap::ShowForClasses');
     return 1 if !$ShowMapClasses;
 
     # get the version of the shown CI

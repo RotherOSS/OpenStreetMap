@@ -65,6 +65,7 @@ Core.OpenStreetMap = (function (TargetNS) {
             Data[hash[0]] = hash[1];
         }
 
+        // store the original action
         if ( Data['Action'] != undefined ) {
             Data['OriginalAction'] = Data['Action'];
         }
@@ -72,7 +73,14 @@ Core.OpenStreetMap = (function (TargetNS) {
             // (Customer)Frontend::CommonParam###Action
             Data['OriginalAction'] = 'CommonAction';
         }
-        Data['Action'] = 'OpenStreetMap';
+
+        // use agent or customer interface
+        if ( Core.Config.Get('SessionName') === Core.Config.Get('CustomerPanelSessionName') ) {
+            Data['Action'] = 'CustomerOpenStreetMap';
+        }
+        else {
+            Data['Action'] = 'AgentOpenStreetMap';
+        }
 
         Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function(Response){
 
