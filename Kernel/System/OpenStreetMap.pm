@@ -205,6 +205,14 @@ sub GenerateResponse {
 
         next CATEGORY if !$HasAccess;
 
+        if ( !$BackendDef{ $Data{Class} }{Backend} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "No Backend defined for $Data{Class}!",
+            );
+            return $ReturnErr;
+        }
+
         my %Info = $Kernel::OM->Get( $BackendDef{ $Data{Class} }{Backend} )->GatherInfo(
             %Data,
             BackendDef => $BackendDef{ $Data{Class} },
