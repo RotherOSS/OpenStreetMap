@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
     overflow: hidden;
 }
 
-.oooTile_OSMCanvas > figure {
+#openstreetmap-canvas {
     height: 100%;
     width: 100%;
     margin: 0;

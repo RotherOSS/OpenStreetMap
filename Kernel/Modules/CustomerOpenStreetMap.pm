@@ -71,27 +71,14 @@ sub Run {
     # show module page
     else {
 
-        my $SessionObject = $Kernel::OM->Get('Kernel::System::AuthSession');
-
-        # store last screen, used for backlinks
-        $SessionObject->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenView',
-            Value     => $Self->{RequestedURL},
-        );
-
-        # output header
-        my $Output = $LayoutObject->Header(
-            Title => Translatable('OpenStreetMap'),
-        );
-        $Output .= $LayoutObject->NavigationBar();
-
         $Output .= $LayoutObject->Output(
-            TemplateFile => 'OpenStreetMap',
+            TemplateFile => 'CustomerDashboard',
+            Data         => {
+                Title => $Self->{ModuleReg}{Title} || 'Map',
+            },
         );
-
-        # add footer
-        $Output .= $LayoutObject->Footer();
+        $Output .= $LayoutObject->CustomerNavigationBar();
+        $Output .= $LayoutObject->CustomerFooter();
 
         return $Output;
 

@@ -86,7 +86,7 @@ sub Run {
         $Output .= $LayoutObject->NavigationBar();
 
         $Output .= $LayoutObject->Output(
-            TemplateFile => 'OpenStreetMap',
+            TemplateFile => 'AgentOpenStreetMap',
         );
 
         # add footer
