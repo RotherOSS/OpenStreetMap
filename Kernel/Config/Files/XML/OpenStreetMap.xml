@@ -187,7 +187,7 @@
             </Item>
         </Value>
     </Setting>
-    <Setting Name="CustomerFrontend::Navigation###OpenStreetMap###002-OpenStreetMap" Required="0" Valid="1">
+    <Setting Name="CustomerFrontend::Navigation###CustomerOpenStreetMap###002-OpenStreetMap" Required="0" Valid="1">
         <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Customer::ModuleRegistration::MainMenu</Navigation>
         <Value>
@@ -214,7 +214,7 @@
                         <Item Key="Type">Menu</Item>
                         <Item Key="Block"></Item>
                         <Item Key="AccessKey">o</Item>
-                        <Item Key="Prio">270</Item>
+                        <Item Key="Prio">720</Item>
                         <Item Key="svgIcon">var/httpd/htdocs/skins/Customer/default/img/map.svg</Item>
                     </Hash>
                 </Item>
@@ -259,7 +259,7 @@
                 <Item Key="Class">Location</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Location</Item>
                 <Item Key="IconPath">/otobo-web/skins/Agent/default/img/Location.svg</Item>
-                <Item Key="IconOverride">Override01</Item>
+                <Item Key="IconOverride">BasicCIInfo01</Item>
                 <Item Key="LocationInfo">
                     <Hash>
                         <Item Key="SourceKeys">
@@ -575,7 +575,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="OpenStreetMap::IconOverride###BasicCIInfo01" Required="0" Valid="0">
+    <Setting Name="OpenStreetMap::IconOverride###BasicCIInfo01" Required="0" Valid="1">
         <Description Translatable="1">Overrides the default icon based on config item information. Define "States" and assign "IconPaths" to them.</Description>
         <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
         <Value>
