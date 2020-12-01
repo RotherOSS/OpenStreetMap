@@ -71,6 +71,7 @@ sub Run {
     # show module page
     else {
 
+        my $Output = $LayoutObject->CustomerHeader();
         $Output .= $LayoutObject->Output(
             TemplateFile => 'CustomerDashboard',
             Data         => {

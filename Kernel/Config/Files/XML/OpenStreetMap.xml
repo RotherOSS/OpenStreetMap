@@ -534,7 +534,7 @@
         <Navigation>Core::OpenStreetMap::ActionConfig</Navigation>
         <Value>
             <Hash>
-                <Item Key="Action">OpenStreetMap</Item>
+                <Item Key="Action">AgentOpenStreetMap</Item>
                 <Item Key="Show">
                     <Array>
                         <Item>Location</Item>
@@ -565,9 +565,13 @@
         <Navigation>Core::OpenStreetMap::ActionConfig</Navigation>
         <Value>
             <Hash>
-                <Item Key="Action"></Item>
-                <Item Key="Show"><Array></Array></Item>
-                <Item Key="Margin"></Item>
+                <Item Key="Action">CustomerOpenStreetMap</Item>
+                <Item Key="Show">
+                    <Array>
+                        <Item>Location</Item>
+                    </Array>
+                </Item>
+                <Item Key="Margin">1.4</Item>
             </Hash>
         </Value>
     </Setting>
