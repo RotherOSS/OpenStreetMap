@@ -847,7 +847,7 @@
     </Setting>
     <Setting Name="OpenStreetMap::IconOverride###BasicCIInfo01" Required="0" Valid="1">
         <Description Translatable="1">Overrides the default icon based on config item information. Define "States" and assign "IconPaths" to them.</Description>
-        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Navigation>Core::OpenStreetMap</Navigation>
         <Value>
             <Hash>
                 <Item Key="Module">Kernel::System::OpenStreetMap::Icons::BasicCIInfo</Item>
