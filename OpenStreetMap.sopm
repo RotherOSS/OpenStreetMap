@@ -31,4 +31,13 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/LocationRed.svg" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.OpenStreetMap.css" />
     </Filelist>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+        <br/>
+        <br/>
+        This plugin relies on the tile servers of OpenStreetMap (https://www.openstreetmap.org/about). If you plan on using it, please consider donating to them (https://wiki.osmfoundation.org/wiki/Donate), to help them keeping their servers running. (When doing this, you could tell them who sent you. ;)
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
 </otobo_package>
