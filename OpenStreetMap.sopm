@@ -30,6 +30,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/Location.svg" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/LocationRed.svg" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.OpenStreetMap.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/map.svg" />
     </Filelist>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
         <br/>

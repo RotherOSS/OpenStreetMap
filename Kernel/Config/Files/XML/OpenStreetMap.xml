@@ -882,7 +882,6 @@
                 <Item Key="Template">Dashboard/TileOSMCanvas</Item>
                 <Item Key="Config">
                     <Hash>
-                        <Item Key="Title">OpenStreetMap</Item>
                     </Hash>
                 </Item>
             </Hash>
