@@ -498,6 +498,276 @@
             </Hash>
         </Value>
     </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###011" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###012" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###013" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###014" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###015" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###016" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###017" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###018" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###019" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
+    <Setting Name="OpenStreetMap::ClassConfig###020" Required="0" Valid="0">
+        <Description Translatable="1">Configurates Backend information for each class. LocationInfo can contain either SourceKeys for Latitude and Longitude or Linked Classes which provide those. LineColor can be either "#rgb" (e.g. "#ff0000"), or "DeploymentState" or "IncidentState", to match the specific color.</Description>
+        <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Class"></Item>
+                <Item Key="Backend"></Item>
+                <Item Key="IconPath"></Item>
+                <Item Key="LocationInfo">
+                    <Hash>
+                        <Item Key="SourceKeys">
+                            <Hash>
+                                <Item Key="Latitude"></Item>
+                                <Item Key="Longitude"></Item>
+                            </Hash>
+                        </Item>
+                        <Item Key="LinkedClasses">
+                            <Array></Array>
+                        </Item>
+                    </Hash>
+                </Item>
+                <Item Key="LineWidth"></Item>
+                <Item Key="LineColor"></Item>
+                <Item Key="LinkSelf">1</Item>
+            </Hash>
+        </Value>
+    </Setting>
     <Setting Name="OpenStreetMap::ActionConfig###001" Required="0" Valid="1">
         <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
         <Navigation>Core::OpenStreetMap::ActionConfig</Navigation>
