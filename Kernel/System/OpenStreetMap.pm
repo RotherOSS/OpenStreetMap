@@ -216,6 +216,7 @@ sub GenerateResponse {
         my %Info = $Kernel::OM->Get( $BackendDef{ $Data{Class} }{Backend} )->GatherInfo(
             %Data,
             BackendDef => $BackendDef{ $Data{Class} },
+            UserID     => $Param{UserID} // undef,
         );
 
         # Adjust map cutout

@@ -155,13 +155,13 @@ sub GatherInfo {
             }
         }
 
-        # place Icon
+        # place Icon (LinkSelf only for agents)
         if ( $Icon ) {
             push @{ $Icons{Path} },      $Icon;
             push @{ $Icons{Latitude} },  $Latitude;
             push @{ $Icons{Longitude} }, $Longitude;
             push @{ $Icons{Link} },
-                ( $Param{BackendDef}{LinkSelf} )
+                ( $Param{BackendDef}{LinkSelf} && $Param{UserID} )
                 ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}"
                 : '';
         }

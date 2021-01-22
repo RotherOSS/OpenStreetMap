@@ -207,9 +207,7 @@ sub GatherInfo {
             }
         }
 
-        #use Data::Dumper;
-        #print STDERR "vo60 - CI: ".Dumper($ConfigItem);
-        # add line
+        # add line (LinkSelf only for agents)
         push @{ $Lines{From0} }, $Info[0]{From}[0];
         push @{ $Lines{From1} }, $Info[0]{From}[1];
         push @{ $Lines{To0} },   $Info[1]{From}[0];
@@ -220,15 +218,11 @@ sub GatherInfo {
             : $Param{BackendDef}{LineColor} || "#552244";
         push @{ $Lines{Weight} }, $Param{BackendDef}{LineWidth} || 5;
         push @{ $Lines{Link} },
-            ( $Param{BackendDef}{LinkSelf} )
+            ( $Param{BackendDef}{LinkSelf} && $Param{UserID} )
             ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}"
             : '';
 
     }
-
-    #use Data::Dumper;
-    #print STDERR "vo60 - Icons: ".Dumper(\%Icons);
-    #print STDERR "vo60 - Lines: ".Dumper(\%Lines);
 
     return (
         From  => $From,
