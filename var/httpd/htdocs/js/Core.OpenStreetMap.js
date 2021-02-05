@@ -141,9 +141,10 @@ Core.OpenStreetMap = (function (TargetNS) {
                         var OpenUrl = GetLinkOpener( Core.Config.Get('Baselink')+Lines['Link'][i] );
                         Line.on( "click", OpenUrl );
                     }
-                    // description
-                    else if ( Lines['Description'][i] != '' ) {
-                        Line.bindPopup( Lines['Description'][i] );
+
+                    // tooltip
+                    if ( Icons['Tooltip'] && Icons['Tooltip'][i] != '' ) {
+                        Icon.bindTooltip( Icons['Tooltip'][i] );
                     }
 
                 }

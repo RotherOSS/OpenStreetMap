@@ -245,7 +245,7 @@ sub GenerateResponse {
         # gather icon info
         if ( $Info{Icons} ) {
             if ( $Info{Icons}{Latitude} && $Info{Icons}{Longitude} ) {
-                for my $Key (qw/Latitude Longitude Path Link Description/) {
+                for my $Key (qw/Latitude Longitude Path Link Tooltip/) {
                     if ( defined $Info{Icons}{$Key} ) {
                         for my $i ( 0 .. $#{ $Info{Icons}{Latitude} } ) {
                             push @{ $Icons{$Key} }, $Info{Icons}{$Key}[$i];
@@ -253,7 +253,7 @@ sub GenerateResponse {
                     }
                     else {
                         for my $i ( 0 .. $#{ $Info{Icons}{Latitude} } ) {
-                            push @{ $Icons{$Key} }, "";
+                            push @{ $Icons{$Key} }, '';
                         }
                     }
                 }
@@ -263,7 +263,7 @@ sub GenerateResponse {
         # gather line info
         if ( $Info{Lines} ) {
             if ( $Info{Lines}{From0} ) {
-                for my $Key (qw/From0 To0 From1 To1 Color Link Description Weight/) {
+                for my $Key (qw/From0 To0 From1 To1 Color Link Tooltip Weight/) {
                     if ( defined $Info{Lines}{$Key} ) {
                         for my $i ( 0 .. $#{ $Info{Lines}{From0} } ) {
                             push @{ $Lines{$Key} }, $Info{Lines}{$Key}[$i];
@@ -271,7 +271,7 @@ sub GenerateResponse {
                     }
                     else {
                         for my $i ( 0 .. $#{ $Info{Lines}{From0} } ) {
-                            push @{ $Lines{$Key} }, "";
+                            push @{ $Lines{$Key} }, '';
                         }
                     }
                 }
