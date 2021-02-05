@@ -276,6 +276,7 @@
                 <Item Key="LineWidth"></Item>
                 <Item Key="LineColor"></Item>
                 <Item Key="LinkSelf">1</Item>
+                <Item Key="Tooltip">1</Item>
             </Hash>
         </Value>
     </Setting>

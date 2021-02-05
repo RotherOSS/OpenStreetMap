@@ -164,6 +164,10 @@ sub GatherInfo {
                 ( $Param{BackendDef}{LinkSelf} && $Param{UserID} )
                 ? "Action=AgentITSMConfigItemZoom;ConfigItemID=$ConfigItem->{ConfigItemID}"
                 : '';
+            push @{ $Icons{Tooltip} },
+                ( $Param{BackendDef}{Tooltip} )
+                ? $Version->{Name}
+                : '';
         }
     }
 
