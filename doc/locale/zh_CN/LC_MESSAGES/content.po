@@ -1,0 +1,286 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2019-2024 Rother OSS GmbH, https://otobo.de/
+# This file is distributed under the same license as the OTOBO Installation
+# Guide package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OTOBO Installation Guide rel-11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-16 10:25+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: ../../content/index.rst:16
+msgid "Sacrifice to Sphinx"
+msgstr ""
+
+#: ../../content/index.rst:19
+msgid "Description"
+msgstr ""
+
+#: ../../content/index.rst:20
+msgid ""
+"Show ConfigItems and connections between them on Openstreetmap. Besides "
+"an extra Action, the map can be included on the Dashboard and in a widget"
+" on AgentITSMConfigItemZoom."
+msgstr ""
+
+#: ../../content/index.rst:23
+msgid "System requirements"
+msgstr ""
+
+#: ../../content/index.rst:26
+msgid "Framework"
+msgstr ""
+
+#: ../../content/index.rst:27
+msgid "OTOBO 10.1.x"
+msgstr ""
+
+#: ../../content/index.rst:30
+msgid "Packages"
+msgstr ""
+
+#: ../../content/index.rst:31 ../../content/index.rst:35
+msgid "\\-"
+msgstr ""
+
+#: ../../content/index.rst:34
+msgid "Third-party software"
+msgstr ""
+
+#: ../../content/index.rst:38
+msgid "Usage"
+msgstr ""
+
+#: ../../content/index.rst:41
+msgid "Setup"
+msgstr ""
+
+#: ../../content/index.rst:43
+msgid ""
+"In the ActionConfigs define which on which actions the map should be "
+"available and which classes should be shown. For AgentITSMConfigItemZoom "
+"this can be filtered with OpenStreetMap::ShowForClasses to be shown only "
+"for certain classes. In the ClassConfigs define, how classes should be "
+"represented on the map. For locations, i.e. classes which should be "
+"represented as points on the map, the class needs an attribute which "
+"contains the latitude and one which contains the longitude, both in "
+"decimal representation."
+msgstr ""
+
+#: ../../content/index.rst:48
+msgid "Configuration Reference"
+msgstr ""
+
+#: ../../content/index.rst:51
+msgid "Core::OpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:54
+msgid "OpenStreetMap::IconOverride###BasicCIInfo01"
+msgstr ""
+
+#: ../../content/index.rst:55
+msgid ""
+"Overrides the default icon based on config item information. Define "
+"\"States\" and assign \"IconPaths\" to them."
+msgstr ""
+
+#: ../../content/index.rst:58
+msgid "OpenStreetMap::ShowForClasses"
+msgstr ""
+
+#: ../../content/index.rst:59
+msgid "For which classes the map is displayed."
+msgstr ""
+
+#: ../../content/index.rst:62
+msgid "OpenStreetMap::IncidentStateColors"
+msgstr ""
+
+#: ../../content/index.rst:63
+msgid "Color representation of incident states on the map."
+msgstr ""
+
+#: ../../content/index.rst:66
+msgid "Core::OpenStreetMap::ActionConfig"
+msgstr ""
+
+#: ../../content/index.rst:69
+msgid "OpenStreetMap::ActionConfig###001"
+msgstr ""
+
+#: ../../content/index.rst:70
+msgid "Configurates how the map is presented for a given action."
+msgstr ""
+
+#: ../../content/index.rst:73
+msgid "Core::OpenStreetMap::ClassConfig"
+msgstr ""
+
+#: ../../content/index.rst:76
+msgid "OpenStreetMap::ClassConfig###001"
+msgstr ""
+
+#: ../../content/index.rst:77
+msgid ""
+"Configurates Backend information for each class. LocationInfo can contain"
+" either SourceKeys for Latitude and Longitude or Linked Classes which "
+"provide those. LineColor can be either \"#rgb\" (e.g. \"#ff0000\"), or "
+"\"DeploymentState\" or \"IncidentState\", to match the specific color."
+msgstr ""
+
+#: ../../content/index.rst:80
+msgid "Frontend::Agent::ModuleRegistration"
+msgstr ""
+
+#: ../../content/index.rst:83
+msgid "Frontend::Module###AgentOpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:84 ../../content/index.rst:127
+msgid "Frontend module registration for the agent interface."
+msgstr ""
+
+#: ../../content/index.rst:87
+msgid "Frontend::Agent::ModuleRegistration::Loader"
+msgstr ""
+
+#: ../../content/index.rst:90
+msgid "Loader::Module::AgentDashboard###437-OSM"
+msgstr ""
+
+#: ../../content/index.rst:91 ../../content/index.rst:95
+#: ../../content/index.rst:99
+msgid "Loader module registration for the agent interface."
+msgstr ""
+
+#: ../../content/index.rst:94
+msgid "Loader::Module::AgentITSMConfigItemZoom###437-OSM"
+msgstr ""
+
+#: ../../content/index.rst:98
+msgid "Loader::Module::AgentOpenStreetMap###437-OSM"
+msgstr ""
+
+#: ../../content/index.rst:102
+msgid "Frontend::Agent::ModuleRegistration::MainMenu"
+msgstr ""
+
+#: ../../content/index.rst:105
+msgid "Frontend::Navigation###AgentITSMConfigItem###004-OpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:106 ../../content/index.rst:145
+msgid "Main menu item registration."
+msgstr ""
+
+#: ../../content/index.rst:109
+msgid "Frontend::Agent::View::Dashboard"
+msgstr ""
+
+#: ../../content/index.rst:112
+msgid "DashboardBackend###0002-OpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:113
+msgid "Parameters for the OpenStreetMap dashboard backend."
+msgstr ""
+
+#: ../../content/index.rst:116
+msgid "Frontend::Base::OutputFilter"
+msgstr ""
+
+#: ../../content/index.rst:119
+msgid "Frontend::Output::FilterElementPost###OutputFilterPostOpenStreetMapCIWidget"
+msgstr ""
+
+#: ../../content/index.rst:120
+msgid ""
+"Output filter to add an OpenStreetMap widget to the "
+"AgentITSMConfigItemZoom screen."
+msgstr ""
+
+#: ../../content/index.rst:123
+msgid "Frontend::Customer::ModuleRegistration"
+msgstr ""
+
+#: ../../content/index.rst:126
+msgid "CustomerFrontend::Module###CustomerOpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:130
+msgid "Frontend::Customer::ModuleRegistration::Loader"
+msgstr ""
+
+#: ../../content/index.rst:133
+msgid "Loader::Module::CustomerOpenStreetMap###437-OSM"
+msgstr ""
+
+#: ../../content/index.rst:134 ../../content/index.rst:138
+msgid "Loader module registration for the customer interface."
+msgstr ""
+
+#: ../../content/index.rst:137
+msgid "Loader::Module::CustomerDashboard###437-OSM"
+msgstr ""
+
+#: ../../content/index.rst:141
+msgid "Frontend::Customer::ModuleRegistration::MainMenu"
+msgstr ""
+
+#: ../../content/index.rst:144
+msgid "CustomerFrontend::Navigation###CustomerOpenStreetMap###002-OpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:148
+msgid "Frontend::Customer::View::Dashboard::Tiles"
+msgstr ""
+
+#: ../../content/index.rst:151
+msgid "CustomerDashboard::Tiles###OpenStreetMap"
+msgstr ""
+
+#: ../../content/index.rst:152
+msgid "Tile registration for the CustomerDashboard. Module is required."
+msgstr ""
+
+#: ../../content/index.rst:155
+msgid "About"
+msgstr ""
+
+#: ../../content/index.rst:158
+msgid "Contact"
+msgstr ""
+
+#: ../../content/index.rst:159
+msgid "Rother OSS GmbH"
+msgstr ""
+
+#: ../../content/index.rst:160
+msgid "Email: hello@otobo.de"
+msgstr ""
+
+#: ../../content/index.rst:161
+msgid "Web: https://otobo.de"
+msgstr ""
+
+#: ../../content/index.rst:164
+msgid "Version"
+msgstr ""
+
+#: ../../content/index.rst:165
+msgid ""
+"Author: |doc-vendor| / Version: |doc-version| / Date of release: |doc-"
+"datestamp|"
+msgstr ""
+
