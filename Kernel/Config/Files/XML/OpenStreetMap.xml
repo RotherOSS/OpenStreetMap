@@ -256,7 +256,7 @@
         <Navigation>Core::OpenStreetMap::ClassConfig</Navigation>
         <Value>
             <Hash>
-                <Item Key="Class">Location</Item>
+                <Item Key="Class">Subsidiary</Item>
                 <Item Key="Backend">Kernel::System::OpenStreetMap::Location</Item>
                 <Item Key="IconPath">/otobo-web/skins/Agent/default/img/Location.svg</Item>
                 <Item Key="IconOverride">BasicCIInfo01</Item>
@@ -264,8 +264,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude">GPSLatitude</Item>
-                                <Item Key="Longitude">GPSLongitude</Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -846,6 +846,7 @@
             </Hash>
         </Value>
     </Setting>
+
     <Setting Name="OpenStreetMap::IconOverride###BasicCIInfo01" Required="0" Valid="1">
         <Description Translatable="1">Overrides the default icon based on config item information. Define "States" and assign "IconPaths" to them.</Description>
         <Navigation>Core::OpenStreetMap</Navigation>
@@ -888,4 +889,43 @@
             </Hash>
         </Value>
     </Setting>
+    
+    <Setting Name="OpenStreetMap::ActionConfig###006" Required="0" Valid="0">
+        <Description Translatable="1">Configurates how the map is presented for a given action.</Description>
+        <Navigation>Core::OpenStreetMap::ActionConfig</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Action">AgentTicketOpenStreetMap</Item>
+                <Item Key="Show">
+                    <Array>
+                        <Item>Location</Item>
+                    </Array>
+                </Item>
+                <Item Key="Margin">1.4</Item>
+            </Hash>
+        </Value>
+    </Setting>
+
+    <Setting Name="Frontend::Module###AgentTicketOpenStreetMap" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="GroupRo">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Group">
+                        <Array>
+                        </Array>
+                    </Item>
+                    <Item Key="Description">OpenStreetMap</Item>
+                    <Item Key="Title" Translatable="1">OpenStreetMap</Item>
+                    <Item Key="NavBarName">CMDB</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    
 </otobo_config>

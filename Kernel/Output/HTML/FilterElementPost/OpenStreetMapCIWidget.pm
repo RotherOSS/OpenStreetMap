@@ -49,9 +49,9 @@ sub Run {
     $Self->{RequestedURL} =~ /ConfigItemID=(\d+)/;
     return 1 if !$1;
 
-    my $Version = $ConfigItemObject->VersionGet(
-        ConfigItemID => $1,
-        XMLDataGet   => 0,
+    my $Version = $ConfigItemObject->ConfigItemGet(
+        ConfigItemID  => $1,
+        DynamicFields => 0,
     );
 
     # insert map if CI belongs to active class

@@ -65,8 +65,12 @@ Gathers location and icon info.
 
 =cut
 
+use Data::Dumper;
+
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
+
+    print STDERR $Param{Class} . "\n";
 
     # check for needed data
     for my $Needed (qw/BackendDef Class/) {
@@ -121,12 +125,13 @@ sub GatherInfo {
     CI:
     for my $ConfigItem (@CIs) {
 
-        my $Version = $ConfigItemObject->VersionGet(
+        my $Version = $ConfigItemObject->ConfigItemGet(
             VersionID => $ConfigItem->{LastVersionID},
+	    DynamicFields => 1,
         );
 
-        my $Latitude  = $Version->{XMLData}->[1]->{Version}->[1]->{GPSLatitude}->[1]->{Content}  || undef;
-        my $Longitude = $Version->{XMLData}->[1]->{Version}->[1]->{GPSLongitude}->[1]->{Content} || undef;
+        my $Latitude  = $Version->{"DynamicField_Location-Latitude"}  || undef;
+        my $Longitude = $Version->{"DynamicField_Location-Longitude"} || undef;
 
         if ( !defined $Latitude || !defined $Longitude ) {
             next CI;
