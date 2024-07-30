@@ -2,7 +2,7 @@
 # OTOBO is a web-based ticketing system for service organisations.
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
-# Copyright (C) 2019-2020 Rother OSS GmbH, https://otobo.de/
+# Copyright (C) 2019-2024 Rother OSS GmbH, https://otobo.de/
 # --
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -20,9 +20,12 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
+    'Kernel::Config',
     'Kernel::System::Log',
     'Kernel::System::GeneralCatalog',
     'Kernel::System::ITSMConfigItem',
+    'Kernel::System::ITSMConfigItem::ConfigItemTicket',
+    'Kernel::System::Main',
 );
 
 =head1 NAME
@@ -65,12 +68,8 @@ Gathers location and icon info.
 
 =cut
 
-use Data::Dumper;
-
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
-
-    print STDERR $Param{Class} . "\n";
 
     # check for needed data
     for my $Needed (qw/BackendDef Class/) {
@@ -91,6 +90,17 @@ sub GatherInfo {
             ConfigItemID => $Param{ConfigItemID},
         );
     }
+    elsif ( $Param{FilterFromTickets} ) {
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
+
+        my $ConfigItemTicketObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem::ConfigItemTicket');
+        push @CIs, @{
+            $ConfigItemTicketObject->ConfigItemsLinkedToTickets(
+                ClassID => $ClassToID{ $Param{Class} },
+            )
+        };
+    }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
         my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
@@ -107,7 +117,7 @@ sub GatherInfo {
         my $OverrideConfig = $Kernel::OM->Get('Kernel::Config')->Get('OpenStreetMap::IconOverride')->{ $Param{BackendDef}{IconOverride} };
 
         # load the module
-        if ( !$Kernel::OM->Get('Kernel::System::Main')->Require($OverrideConfig->{Module}) ) {
+        if ( !$Kernel::OM->Get('Kernel::System::Main')->Require( $OverrideConfig->{Module} ) ) {
             $Kernel::OM->Get('Kernel::System::Log')->Log(
                 Priority => 'error',
                 Message  => "Can't load the override module $OverrideConfig->{Module}!"
@@ -117,7 +127,7 @@ sub GatherInfo {
 
         # create new instance
         $IconObject = $OverrideConfig->{Module}->new(
-            %{ $OverrideConfig },
+            %{$OverrideConfig},
         );
     }
 
@@ -126,8 +136,8 @@ sub GatherInfo {
     for my $ConfigItem (@CIs) {
 
         my $Version = $ConfigItemObject->ConfigItemGet(
-            VersionID => $ConfigItem->{LastVersionID},
-	    DynamicFields => 1,
+            VersionID     => $ConfigItem->{LastVersionID},
+            DynamicFields => 1,
         );
 
         my $Latitude  = $Version->{"DynamicField_Location-Latitude"}  || undef;
@@ -155,13 +165,13 @@ sub GatherInfo {
                 Version => $Version,
             );
 
-            if ( $OverrideIcon ) {
+            if ($OverrideIcon) {
                 $Icon = $OverrideIcon;
             }
         }
 
         # place Icon (LinkSelf only for agents)
-        if ( $Icon ) {
+        if ($Icon) {
             push @{ $Icons{Path} },      $Icon;
             push @{ $Icons{Latitude} },  $Latitude;
             push @{ $Icons{Longitude} }, $Longitude;

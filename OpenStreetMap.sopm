@@ -16,11 +16,13 @@
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMapWidget.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardOpenStreetMap.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/Dashboard/TileOSMCanvas.tt" />
+        <File Permission="644" Location="Kernel/System/ITSMConfigItem/ConfigItemTicket.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Line.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Location.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap/Icons/BasicCIInfo.pm" />
         <File Permission="644" Location="Kernel/System/OpenStreetMap.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentOpenStreetMap.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentTicketOpenStreetMap.pm" />
         <File Permission="644" Location="Kernel/Modules/CustomerOpenStreetMap.pm" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.OpenStreetMap.js" />
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/leaflet-1.4.0/leaflet.js" />

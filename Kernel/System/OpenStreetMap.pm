@@ -2,7 +2,7 @@
 # OTOBO is a web-based ticketing system for service organisations.
 # --
 # Copyright (C) 2001-2018 OTRS AG, https://otrs.com/
-# Copyright (C) 2019-2020 Rother OSS GmbH, https://otobo.de/
+# Copyright (C) 2019-2024 Rother OSS GmbH, https://otobo.de/
 # --
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -20,9 +20,11 @@ use strict;
 use warnings;
 
 our @ObjectDependencies = (
-    'Kernel::System::Log',
     'Kernel::Config',
+    'Kernel::System::CustomerGroup',
+    'Kernel::System::GeneralCatalog',
     'Kernel::System::ITSMConfigItem',
+    'Kernel::System::Log',
 );
 
 =head1 NAME
@@ -98,7 +100,7 @@ sub GenerateResponse {
         return $ReturnErr;
     }
 
-    if ( $Param{OriginalAction} eq 'CommonAction' ) {    
+    if ( $Param{OriginalAction} eq 'CommonAction' ) {
         $Param{OriginalAction} = $Param{UserID} ? ( $ConfigObject->Get('Frontend::CommonParam')->{'Action'} || 'CommonAction' ) :
             ( $ConfigObject->Get('CustomerFrontend::CommonParam')->{'Action'} || 'CustomerCommonAction' );
     }
@@ -107,6 +109,7 @@ sub GenerateResponse {
     my $MapConfig;
     TEMPLATE:
     for my $CurrConf ( values %{$Templates} ) {
+
         if ( $CurrConf->{Action} eq $Param{OriginalAction} ) {
             $MapConfig = $CurrConf;
             last TEMPLATE;
@@ -131,7 +134,7 @@ sub GenerateResponse {
         my $ClassList = $GeneralCatalogObject->ItemList(
             Class => 'ITSM::ConfigItem::Class',
         );
-        %ClassIDs = reverse %{ $ClassList };
+        %ClassIDs = reverse %{$ClassList};
     }
 
     # get the configurations for the class backends
@@ -160,13 +163,15 @@ sub GenerateResponse {
         else {
             %Data = (
                 Class   => $Category,
-                ClassID => $ClassIDs{ $Category },
+                ClassID => $ClassIDs{$Category},
             );
         }
 
         # show items only if user has access rights
         my $HasAccess;
+
         # agents
+
         if ( $Param{UserID} ) {
             $HasAccess = $ConfigItemObject->Permission(
                 Scope   => 'Class',
@@ -178,16 +183,18 @@ sub GenerateResponse {
         }
 
         # customer users with group support
-        elsif ( $CustomerGroupObject ) {
+        elsif ($CustomerGroupObject) {
             my $ClassItem = $GeneralCatalogObject->ItemGet(
                 ItemID => $Data{ClassID},
             );
+
             # get user groups
             my @GroupIDs = $CustomerGroupObject->GroupMemberList(
                 UserID => $Param{CustomerUserID},
                 Type   => 'ro',
                 Result => 'ID',
             );
+
             # looking for group id
             GROUP:
             for my $GroupID (@GroupIDs) {
@@ -211,6 +218,10 @@ sub GenerateResponse {
                 Message  => "No Backend defined for $Data{Class}!",
             );
             return $ReturnErr;
+        }
+
+        if ( $Param{OriginalAction} eq 'AgentTicketOpenStreetMap' ) {
+            $Data{FilterFromTickets} = 1;
         }
 
         my %Info = $Kernel::OM->Get( $BackendDef{ $Data{Class} }{Backend} )->GatherInfo(
@@ -239,7 +250,7 @@ sub GenerateResponse {
             if ( $Info{To}[1] > $Return->[1]->{Data}->[1] )   { $Return->[1]->{Data}->[1] = $Info{To}[1] }
         }
         else {
-             next CATEGORY;
+            next CATEGORY;
         }
 
         # gather icon info
@@ -367,7 +378,7 @@ sub _ClassGet {
             return;
         }
 
-        return ( 
+        return (
             ClassID => $CI->{ClassID},
             Class   => $CI->{Class},
         );
