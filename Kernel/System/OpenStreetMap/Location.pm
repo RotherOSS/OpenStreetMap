@@ -68,6 +68,8 @@ Gathers location and icon info.
 
 =cut
 
+use Data::Dumper;
+
 sub GatherInfo {
     my ( $Self, %Param ) = @_;
 
@@ -98,6 +100,8 @@ sub GatherInfo {
         push @CIs, @{
             $ConfigItemTicketObject->ConfigItemsLinkedToTickets(
                 ClassID => $ClassToID{ $Param{Class} },
+                # CacheType => $Self->{CacheType},  Cache issues, although seemingly not relevant
+                UserID  => $Param{UserID},
             )
         };
     }

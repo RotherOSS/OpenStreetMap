@@ -57,6 +57,7 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Service',
+    'Kernel::System::Ticket::TicketSearch',
     'Kernel::System::User',
     'Kernel::System::VirtualFS',
     'Kernel::System::XML',
@@ -104,6 +105,13 @@ return a config item list as array hash reference of items linked to any ticket
 sub ConfigItemsLinkedToTickets {
     my ( $Self, %Param ) = @_;
 
+    # get needed objects
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+
+    my $Config = $ConfigObject->Get("OpenStreetMap::ActionConfig");
+    my $Action = $ParamObject->GetParam( Param => 'OriginalAction' );
+
     # check needed stuff
     if ( !$Param{ClassID} ) {
         $Kernel::OM->Get('Kernel::System::Log')->Log(
@@ -111,6 +119,31 @@ sub ConfigItemsLinkedToTickets {
             Message  => 'Need ClassID!',
         );
         return;
+    }
+
+    my $ConfigAction;
+    for my $ConfigKey (keys %{$Config}) {
+        next if $Config->{$ConfigKey}->{Action} ne $Action;
+        $ConfigAction = $Config->{$ConfigKey};
+        last;
+    }
+
+    if ( !$ConfigAction ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'No permission!',
+        );
+        return;
+    }
+
+    for my $Argument (qw(Queues TicketTypes)) {
+        if ( !defined $ConfigAction->{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
     # get state list
@@ -124,28 +157,39 @@ sub ConfigItemsLinkedToTickets {
     # create state string
     my $DeplStateString = join q{, }, keys %{$StateList};
 
-    # ask database
-    $Kernel::OM->Get('Kernel::System::DB')->Prepare(
-        SQL => "SELECT DISTINCT ci.id FROM configitem ci "
-            . "JOIN link_relation lrel on ci.id = lrel.target_key "
-            . "JOIN link_object lobj1 on lrel.target_object_id = lobj1.id "
-            . "JOIN link_object lobj2 on lrel.source_object_id = lobj2.id "
-            . "WHERE lobj1.name = 'ITSMConfigItem' and lobj2.name = 'Ticket' "
-            . "UNION "
-            . "SELECT DISTINCT ci.id FROM configitem ci "
-            . "JOIN link_relation lrel on ci.id = lrel.source_key "
-            . "JOIN link_object lobj2 on lrel.target_object_id = lobj2.id "
-            . "JOIN link_object lobj1 on lrel.source_object_id = lobj1.id "
-            . "WHERE lobj1.name = 'ITSMConfigItem' and lobj2.name = 'Ticket' "
-            . "AND class_id = ? AND cur_depl_state_id IN ( $DeplStateString ) ",
-        Bind => [ \$Param{ClassID} ],
+    my %SearchCriteria = ();
+    if (@{$ConfigAction->{Queues}}) {
+        $SearchCriteria{Queues} = $ConfigAction->{Queues};
+    }
+    if (@{$ConfigAction->{TicketTypes}}) {
+        $SearchCriteria{Types} = $ConfigAction->{TicketTypes};
+    }
+
+    my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
+        Result => 'ARRAY',
+        StateType => 'Open',
+        UserID => $Param{UserID},
+        %SearchCriteria,
     );
 
-    # fetch the result
-    my @ConfigItemIDList;
-    while ( my @Row = $Kernel::OM->Get('Kernel::System::DB')->FetchrowArray() ) {
-        push @ConfigItemIDList, $Row[0];
+    my %ConfigItemIDHash;
+    for my $TicketID (@TicketIDs) {
+        my @LinkedConfigItems = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
+            Object    => 'Ticket',
+            Key       => $TicketID,
+            Object2   => 'ITSMConfigItem',
+            State     => 'Valid',
+            UserID => $Param{UserID},
+            Direction => "Both",
+        );
+        for my $LinkedConfigItem (@LinkedConfigItems) {
+            next if !%{$LinkedConfigItem};
+            for my $Key (keys %{$LinkedConfigItem->{ITSMConfigItem}->{AlternativeTo}->{Source}}) {
+                $ConfigItemIDHash{$Key} = 1;
+            }
+        }
     }
+    my @ConfigItemIDList = keys %ConfigItemIDHash;
 
     # get last versions data
     my @ConfigItemList;
