@@ -16,6 +16,8 @@
 
 package Kernel::System::ITSMConfigItem::ConfigItemTicket;
 
+## nofilter(TidyAll::Plugin::OTOBO::Perl::ParamObject)
+
 use v5.24;
 use strict;
 use warnings;
@@ -57,9 +59,11 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::Main',
     'Kernel::System::Service',
+    'Kernel::System::Ticket',
     'Kernel::System::Ticket::TicketSearch',
     'Kernel::System::User',
     'Kernel::System::VirtualFS',
+    'Kernel::System::Web::Request',
     'Kernel::System::XML',
 );
 
@@ -122,10 +126,11 @@ sub ConfigItemsLinkedToTickets {
     }
 
     my $ConfigAction;
-    for my $ConfigKey (keys %{$Config}) {
-        next if $Config->{$ConfigKey}->{Action} ne $Action;
+    CONFIG_ACTION:
+    for my $ConfigKey ( keys %{$Config} ) {
+        next CONFIG_ACTION if $Config->{$ConfigKey}->{Action} ne $Action;
         $ConfigAction = $Config->{$ConfigKey};
-        last;
+        last CONFIG_ACTION;
     }
 
     if ( !$ConfigAction ) {
@@ -158,17 +163,17 @@ sub ConfigItemsLinkedToTickets {
     my $DeplStateString = join q{, }, keys %{$StateList};
 
     my %SearchCriteria = ();
-    if (@{$ConfigAction->{Queues}}) {
+    if ( @{ $ConfigAction->{Queues} } ) {
         $SearchCriteria{Queues} = $ConfigAction->{Queues};
     }
-    if (@{$ConfigAction->{TicketTypes}}) {
+    if ( @{ $ConfigAction->{TicketTypes} } ) {
         $SearchCriteria{Types} = $ConfigAction->{TicketTypes};
     }
 
     my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
-        Result => 'ARRAY',
+        Result    => 'ARRAY',
         StateType => 'Open',
-        UserID => $Param{UserID},
+        UserID    => $Param{UserID},
         %SearchCriteria,
     );
 
@@ -179,12 +184,13 @@ sub ConfigItemsLinkedToTickets {
             Key       => $TicketID,
             Object2   => 'ITSMConfigItem',
             State     => 'Valid',
-            UserID => $Param{UserID},
+            UserID    => $Param{UserID},
             Direction => "Both",
         );
+        LINKED_CONFIG_ITEM:
         for my $LinkedConfigItem (@LinkedConfigItems) {
-            next if !%{$LinkedConfigItem};
-            for my $Key (keys %{$LinkedConfigItem->{ITSMConfigItem}->{AlternativeTo}->{Source}}) {
+            next LINKED_CONFIG_ITEM if !%{$LinkedConfigItem};
+            for my $Key ( keys %{ $LinkedConfigItem->{ITSMConfigItem}->{AlternativeTo}->{Source} } ) {
                 $ConfigItemIDHash{$Key} = 1;
             }
         }

@@ -1003,18 +1003,17 @@
                         </Item>
                         <Item Key="GroupRo">
                             <Array>
-                                <Item>itsm-configitem</Item>
                             </Array>
                         </Item>
                         <Item Key="Description" Translatable="1">AgentTicketOpenStreetMap</Item>
                         <Item Key="Name">Ticket Map</Item>
                         <Item Key="Link">Action=AgentTicketOpenStreetMap</Item>
                         <Item Key="LinkOption"></Item>
-                        <Item Key="NavBar">Config Item</Item>
+                        <Item Key="NavBar">Ticket</Item>
                         <Item Key="Type"></Item>
                         <Item Key="Block"></Item>
                         <Item Key="AccessKey"></Item>
-                        <Item Key="Prio">220</Item>
+                        <Item Key="Prio">400</Item>
                     </Hash>
                 </Item>
             </Array>
