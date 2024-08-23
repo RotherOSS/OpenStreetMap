@@ -24,7 +24,6 @@ our @ObjectDependencies = (
     'Kernel::System::Log',
     'Kernel::System::GeneralCatalog',
     'Kernel::System::ITSMConfigItem',
-    'Kernel::System::ITSMConfigItem::ConfigItemTicket',
     'Kernel::System::Main',
 );
 
@@ -90,17 +89,10 @@ sub GatherInfo {
             ConfigItemID => $Param{ConfigItemID},
         );
     }
-    elsif ( $Param{FilterFromTickets} ) {
-        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
-        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
-
-        my $ConfigItemTicketObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem::ConfigItemTicket');
+    elsif ( $Param{ConfigItemNumberList} ) {
         push @CIs, @{
-            $ConfigItemTicketObject->ConfigItemsLinkedToTickets(
-                ClassID => $ClassToID{ $Param{Class} },
-
-                # CacheType => $Self->{CacheType},  Cache issues, although seemingly not relevant
-                UserID => $Param{UserID},
+            $ConfigItemObject->ConfigItemGetListByNumbers(
+                ConfigItemNumberList => $Param{ConfigItemNumberList},
             )
         };
     }
@@ -137,7 +129,6 @@ sub GatherInfo {
     my ( $From, $To, %Icons );
     CI:
     for my $ConfigItem (@CIs) {
-
         my $Version = $ConfigItemObject->ConfigItemGet(
             VersionID     => $ConfigItem->{LastVersionID},
             DynamicFields => 1,

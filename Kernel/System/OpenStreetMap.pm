@@ -24,7 +24,10 @@ our @ObjectDependencies = (
     'Kernel::System::CustomerGroup',
     'Kernel::System::GeneralCatalog',
     'Kernel::System::ITSMConfigItem',
+    'Kernel::System::LinkObject',
     'Kernel::System::Log',
+    'Kernel::System::Ticket',
+    'Kernel::System::Web::Request',
 );
 
 =head1 NAME
@@ -66,6 +69,7 @@ Generates the Response containing all the info.
 =cut
 
 sub GenerateResponse {
+
     my ( $Self, %Param ) = @_;
 
     my $ReturnErr = [
@@ -140,9 +144,32 @@ sub GenerateResponse {
     # get the configurations for the class backends
     my %BackendDef = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
 
+    my %ConfigItemNumbersByClass;
+    if ( $Param{OriginalAction} eq 'AgentTicketOpenStreetMap' ) {
+        my @CIs;
+        my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
+        my %ClassToID            = reverse %{ $GeneralCatalogObject->ItemList( Class => 'ITSM::ConfigItem::Class' ) };
+
+        push @CIs, @{
+            $Self->_GetConfigItemsLinkedToTickets(
+                UserID => $Param{UserID},
+            )
+        };
+        for my $ConfigItem (@CIs) {
+            my $Class = $ConfigItem->{Class};
+            if ( defined $ConfigItemNumbersByClass{$Class} ) {
+                push @{ $ConfigItemNumbersByClass{$Class} }, $ConfigItem->{Number};
+            }
+            else {
+                $ConfigItemNumbersByClass{$Class} = [ $ConfigItem->{Number} ];
+            }
+        }
+    }
+
     my ( $Return, %Icons, %Lines );
+    my @ClassesForMapping = $Param{OriginalAction} eq 'AgentTicketOpenStreetMap' ? keys %ConfigItemNumbersByClass : @{ $MapConfig->{Show} };
     CATEGORY:
-    for my $Category ( @{ $MapConfig->{Show} } ) {
+    for my $Category (@ClassesForMapping) {
         my %Data;
         if ( $Category eq 'Self' ) {
             %Data = $Self->_ClassGet(
@@ -173,13 +200,7 @@ sub GenerateResponse {
         # agents
 
         if ( $Param{UserID} ) {
-            $HasAccess = $ConfigItemObject->Permission(
-                Scope   => 'Class',
-                ClassID => $Data{ClassID},
-                UserID  => $Param{UserID},
-                Type    => 'ro',
-                LogNo   => 1,
-            );
+            $HasAccess = 1;
         }
 
         # customer users with group support
@@ -221,7 +242,7 @@ sub GenerateResponse {
         }
 
         if ( $Param{OriginalAction} eq 'AgentTicketOpenStreetMap' ) {
-            $Data{FilterFromTickets} = 1;
+            $Data{ConfigItemNumberList} = $ConfigItemNumbersByClass{$Category};
         }
 
         my %Info = $Kernel::OM->Get( $BackendDef{ $Data{Class} }{Backend} )->GatherInfo(
@@ -231,7 +252,7 @@ sub GenerateResponse {
         );
 
         # Adjust map cutout
-        if ( !defined $Return && %Info ) {
+        if ( !defined $Return && %{ $Info{Icons} } ) {
             $Return = [
                 {
                     Data => $Info{From},
@@ -243,7 +264,7 @@ sub GenerateResponse {
                 }
             ];
         }
-        elsif (%Info) {
+        elsif ( %{ $Info{Icons} } ) {
             if ( $Info{From}[0] < $Return->[0]->{Data}->[0] ) { $Return->[0]->{Data}->[0] = $Info{From}[0] }
             if ( $Info{From}[1] < $Return->[0]->{Data}->[1] ) { $Return->[0]->{Data}->[1] = $Info{From}[1] }
             if ( $Info{To}[0] > $Return->[1]->{Data}->[0] )   { $Return->[1]->{Data}->[0] = $Info{To}[0] }
@@ -386,6 +407,102 @@ sub _ClassGet {
 
     return;
 
+}
+
+sub _GetConfigItemsLinkedToTickets {
+    my ( $Self, %Param ) = @_;
+
+    # get needed objects
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $Config       = $ConfigObject->Get("OpenStreetMap::ActionConfig");
+
+    my $ConfigAction;
+    CONFIG_ACTION:
+    for my $ConfigKey ( keys %{$Config} ) {
+        next CONFIG_ACTION if $Config->{$ConfigKey}->{Action} ne "AgentTicketOpenStreetMap";
+        $ConfigAction = $Config->{$ConfigKey};
+        last CONFIG_ACTION;
+    }
+
+    if ( !$ConfigAction ) {
+        $Kernel::OM->Get('Kernel::System::Log')->Log(
+            Priority => 'error',
+            Message  => 'No permission!',
+        );
+        return;
+    }
+
+    for my $Argument (qw(Queues TicketTypes)) {
+        if ( !defined $ConfigAction->{$Argument} ) {
+            $Kernel::OM->Get('Kernel::System::Log')->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get state list
+    my $StateList = $Kernel::OM->Get('Kernel::System::GeneralCatalog')->ItemList(
+        Class       => 'ITSM::ConfigItem::DeploymentState',
+        Preferences => {
+            Functionality => [ 'preproductive', 'productive' ],
+        },
+    );
+
+    # create state string
+    my $DeplStateString = join q{, }, keys %{$StateList};
+
+    my %SearchCriteria = ();
+    if ( @{ $ConfigAction->{Queues} } ) {
+        $SearchCriteria{Queues} = $ConfigAction->{Queues};
+    }
+    if ( @{ $ConfigAction->{TicketTypes} } ) {
+        $SearchCriteria{Types} = $ConfigAction->{TicketTypes};
+    }
+
+    my @TicketIDs = $Kernel::OM->Get('Kernel::System::Ticket')->TicketSearch(
+        Result    => 'ARRAY',
+        StateType => 'Open',
+        UserID    => $Param{UserID},
+        %SearchCriteria,
+    );
+
+    my %ConfigItemIDHash;
+    for my $TicketID (@TicketIDs) {
+        my @LinkedConfigItems = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkList(
+            Object    => 'Ticket',
+            Key       => $TicketID,
+            Object2   => 'ITSMConfigItem',
+            State     => 'Valid',
+            UserID    => $Param{UserID},
+            Direction => "Both",
+        );
+        LINKED_CONFIG_ITEM:
+        for my $LinkedConfigItem (@LinkedConfigItems) {
+            next LINKED_CONFIG_ITEM if !%{$LinkedConfigItem};
+            for my $Key ( keys %{ $LinkedConfigItem->{ITSMConfigItem}->{AlternativeTo}->{Source} } ) {
+                $ConfigItemIDHash{$Key} = 1;
+            }
+        }
+    }
+    my @ConfigItemIDList = keys %ConfigItemIDHash;
+
+    # get last versions data
+    my @ConfigItemList;
+    for my $ConfigItemID (@ConfigItemIDList) {
+
+        # get version data
+        my $ConfigItemObject = $Kernel::OM->Get('Kernel::System::ITSMConfigItem');
+        my $ConfigItem       = $ConfigItemObject->ConfigItemGet(
+            ConfigItemID  => $ConfigItemID,
+            DynamicFields => 0,
+        );
+
+        push @ConfigItemList, $ConfigItem;
+    }
+
+    return \@ConfigItemList;
 }
 
 1;
