@@ -299,8 +299,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -328,8 +328,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -358,8 +358,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -388,8 +388,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -416,8 +416,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -444,8 +444,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -472,8 +472,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -500,8 +500,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -528,8 +528,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -556,8 +556,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -584,8 +584,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -612,8 +612,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -640,8 +640,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -668,8 +668,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -696,8 +696,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -724,8 +724,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -752,8 +752,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -780,8 +780,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -808,8 +808,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -836,8 +836,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -864,8 +864,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -892,8 +892,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -920,8 +920,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -948,8 +948,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -976,8 +976,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1004,8 +1004,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1032,8 +1032,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1060,8 +1060,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1117,8 +1117,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1145,8 +1145,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1173,8 +1173,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1201,8 +1201,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1229,8 +1229,8 @@
                     <Hash>
                         <Item Key="SourceKeys">
                             <Hash>
-                                <Item Key="Latitude"></Item>
-                                <Item Key="Longitude"></Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Hash>
                         </Item>
                         <Item Key="LinkedClasses">
@@ -1264,8 +1264,8 @@
                         </Item>
                         <Item Key="LinkedClasses">
                             <Array>
-                                <Item>Location</Item>
-                                <Item>Location</Item>
+                                <Item Key="Latitude">Location-Latitude</Item>
+                                <Item Key="Longitude">Location-Longitude</Item>
                             </Array>
                         </Item>
                     </Hash>
