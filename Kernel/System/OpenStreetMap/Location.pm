@@ -89,12 +89,12 @@ sub GatherInfo {
             ConfigItemID => $Param{ConfigItemID},
         );
     }
-    elsif ( $Param{ConfigItemNumberList} ) {
-        push @CIs, @{
-            $ConfigItemObject->ConfigItemGetListByNumbers(
-                ConfigItemNumberList => $Param{ConfigItemNumberList},
-            )
-        };
+    elsif ( $Param{ConfigItemIDs} ) {
+        for my $ID ( $Param{ConfigItemIDs}->@* ) {
+            push @CIs, $ConfigItemObject->ConfigItemGet(
+                ConfigItemID => $Param{ConfigItemID},
+            );
+        }
     }
     else {
         my $GeneralCatalogObject = $Kernel::OM->Get('Kernel::System::GeneralCatalog');
