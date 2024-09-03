@@ -257,7 +257,7 @@ sub GenerateResponse {
         );
 
         # Adjust map cutout
-        if ( !defined $Return && %{ $Info{Icons} } ) {
+        if ( !defined $Return && $Info{From} ) {
             $Return = [
                 {
                     Data => $Info{From},
@@ -269,7 +269,7 @@ sub GenerateResponse {
                 }
             ];
         }
-        elsif ( %{ $Info{Icons} } ) {
+        elsif ( $Info{From} ) {
             if ( $Info{From}[0] < $Return->[0]->{Data}->[0] ) { $Return->[0]->{Data}->[0] = $Info{From}[0] }
             if ( $Info{From}[1] < $Return->[0]->{Data}->[1] ) { $Return->[0]->{Data}->[1] = $Info{From}[1] }
             if ( $Info{To}[0] > $Return->[1]->{Data}->[0] )   { $Return->[1]->{Data}->[0] = $Info{To}[0] }
