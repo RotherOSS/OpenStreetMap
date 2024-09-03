@@ -181,9 +181,12 @@ sub GenerateResponse {
             );
         }
         elsif ( $Param{OriginalAction} eq 'AgentTicketOpenStreetMap' ) {
-            next CATEGORY if !$ConfigItemIDsByClass{ $Category };
+            next CATEGORY if !$ConfigItemIDsByClass{$Category};
 
-            $Data{ConfigItemIDs} = $ConfigItemIDsByClass{ $Category };
+            %Data = (
+                Class         => $Category,
+                ConfigItemIDs => $ConfigItemIDsByClass{$Category},
+            );
         }
         else {
             %Data = (
@@ -454,8 +457,8 @@ sub _GetConfigItemsLinkedToTickets {
     my %ConfigItemIDHash;
     for my $TicketID (@TicketIDs) {
         my %LinkedConfigItems = $Kernel::OM->Get('Kernel::System::LinkObject')->LinkKeyList(
-            Object    => 'Ticket',
-            Key       => $TicketID,
+            Object1   => 'Ticket',
+            Key1      => $TicketID,
             Object2   => 'ITSMConfigItem',
             State     => 'Valid',
             UserID    => $Param{UserID},
@@ -463,7 +466,7 @@ sub _GetConfigItemsLinkedToTickets {
         );
 
         for my $ConfigItemID ( keys %LinkedConfigItems ) {
-            $ConfigItemIDHash{ $ConfigItemID } = 1;
+            $ConfigItemIDHash{$ConfigItemID} = 1;
         }
     }
 

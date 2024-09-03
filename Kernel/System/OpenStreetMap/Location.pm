@@ -92,7 +92,7 @@ sub GatherInfo {
     elsif ( $Param{ConfigItemIDs} ) {
         for my $ID ( $Param{ConfigItemIDs}->@* ) {
             push @CIs, $ConfigItemObject->ConfigItemGet(
-                ConfigItemID => $Param{ConfigItemID},
+                ConfigItemID => $ID,
             );
         }
     }
