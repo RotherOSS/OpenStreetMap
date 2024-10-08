@@ -8,22 +8,23 @@
     <Description Lang="en">Adds an interface to OpenStreetMap.</Description>
     <Framework>11.0.x</Framework>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/XML/OpenStreetMap.xml" />
-        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/OpenStreetMapCIWidget.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Dashboard/OpenStreetMap.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentOpenStreetMap.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/CustomerOpenStreetMap.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/OpenStreetMapWidget.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentDashboardOpenStreetMap.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/Dashboard/TileOSMCanvas.tt" />
-        <File Permission="644" Location="Kernel/System/ITSMConfigItem/ConfigItemTicket.pm" />
-        <File Permission="644" Location="Kernel/System/OpenStreetMap/Line.pm" />
-        <File Permission="644" Location="Kernel/System/OpenStreetMap/Location.pm" />
-        <File Permission="644" Location="Kernel/System/OpenStreetMap/Icons/BasicCIInfo.pm" />
-        <File Permission="644" Location="Kernel/System/OpenStreetMap.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentOpenStreetMap.pm" />
-        <File Permission="644" Location="Kernel/Modules/AgentTicketOpenStreetMap.pm" />
-        <File Permission="644" Location="Kernel/Modules/CustomerOpenStreetMap.pm" />
+        <File Permission="644" Kernel/Config/Files/XML/OpenStreetMap.xml" />
+        <File Permission="644" Kernel/Modules/AgentOpenStreetMap.pm" />
+        <File Permission="644" Kernel/Modules/AgentTicketOpenStreetMap.pm" />
+        <File Permission="644" Kernel/Modules/CustomerOpenStreetMap.pm" />
+        <File Permission="644" Kernel/Output/HTML/Dashboard/OpenStreetMap.pm" />
+        <File Permission="644" Kernel/Output/HTML/FilterElementPost/OpenStreetMapCIWidget.pm" />
+        <File Permission="644" Kernel/Output/HTML/Templates/Standard/AgentDashboardOpenStreetMap.tt" />
+        <File Permission="644" Kernel/Output/HTML/Templates/Standard/AgentOpenStreetMap.tt" />
+        <File Permission="644" Kernel/Output/HTML/Templates/Standard/CustomerOpenStreetMap.tt" />
+        <File Permission="644" Kernel/Output/HTML/Templates/Standard/Dashboard/TileOSMCanvas.tt" />
+        <File Permission="644" Kernel/Output/HTML/Templates/Standard/OpenStreetMapWidget.tt" />
+        <File Permission="644" Kernel/System/OpenStreetMap/Icons/BasicCIInfo.pm" />
+        <File Permission="644" Kernel/System/OpenStreetMap/Line.pm" />
+        <File Permission="644" Kernel/System/OpenStreetMap/LocalObject.pm" />
+        <File Permission="644" Kernel/System/OpenStreetMap/Location.pm" />
+        <File Permission="644" Kernel/System/OpenStreetMap/Section.pm" />
+        <File Permission="644" Kernel/System/OpenStreetMap.pm" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.OpenStreetMap.js" />
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/leaflet-1.4.0/leaflet.js" />
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.OpenStreetMap.css" />
