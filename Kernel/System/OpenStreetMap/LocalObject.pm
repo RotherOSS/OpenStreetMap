@@ -106,7 +106,7 @@ sub GatherInfo {
     # get the configurations for the class backends
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my %LinkBackendDef
-        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') };
+        = map { $_->{Class} => $_ } values %{ $ConfigObject->Get('OpenStreetMap::ClassConfig') // {} };
 
     my ( $From, $To, %Icons );
     CI:
