@@ -297,7 +297,8 @@
                         </Item>
                         <Item Key="LinkedClasses">
                             <Array>
-                                <Item></Item>
+                                <Item>LocationClass</Item>
+                                <Item>LocationClass</Item>
                             </Array>
                         </Item>
                     </Hash>
